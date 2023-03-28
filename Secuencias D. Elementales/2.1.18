@@ -1,0 +1,55 @@
+
+
+Accion palabra es
+Ambiente
+
+sec: secuncia de caracter
+s: caracter
+
+sal: secuencia de caracter
+
+totalP: entero
+contO: entero
+contP: entero
+
+band: bool
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+CREAR(sec)
+band:= False
+
+Mientras NFDS(sec) hacer
+    Mientras s <> "." hacer
+
+        Si band entonces
+            Si s = "M" entonces 
+                Mientras s <> " " hacer
+                    Escribir(sal, s)
+                    AVZ(sec, s)
+                FinMientras
+            FinSi
+            band:= False
+            AVZ(sec, s)
+        Sino
+            Mientras s <> " " hacer 
+                AVZ(sec, s)
+            FinMientras
+            
+            AVZ(sec, s)
+            band:= True
+        FinSi
+
+    FinMientras
+    AVZ(sec, s)
+FinMientras
+Escribir(sal, ".")
+
+Escribir("La secuencia de salida se ha generado con exito")
+
+CERRAR(sec)
+CERRAR(sal)
+
+FinAccion

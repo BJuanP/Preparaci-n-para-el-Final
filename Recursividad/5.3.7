@@ -1,0 +1,14 @@
+
+
+Funcion Busco(p: puntero a T):entero Es
+Si p <> Nill entonces
+    Busco:= Busco(*p.Izq) + 1 + Busco(*p.Der)
+Sino
+    Busco:= 0
+FinSi
+FinFuncion
+
+
+Prueba de escritorio con el arbol del ejercicio 5.3.6
+
+0 + 1 + 0 + 1 + 0 + 1 + 0 + 1 + 0 + 1 + 0 + 1 + 0 + 1 + 0 = 7

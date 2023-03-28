@@ -1,0 +1,145 @@
+
+
+Accion picante Es
+Ambiente
+
+sec1, sec2, sal: secuencia de caracter
+s1, s2: caracter
+
+aux1s1: caracter
+
+aux2s1: caracter
+
+aux1s2: caracter
+
+avanzar, avanzar2: entero 
+
+bandera, bandera2: bool
+
+digito: {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+
+
+PROCESO
+
+PROCESO
+ARR(sec1)
+ARR(sec2)
+AVZ(sec1, s1)
+AVZ(sec2, s2)
+CREAR(sal)
+
+avanzar:= 0
+
+avanzar2:= 0
+bandera:= True
+bandera2:= False
+
+Mientras NFDS(sec1) y NFDS(sec2) hacer
+
+    Mientras s1 <> " " hacer
+
+        aux1s1:= s1
+        avz(sec1, s1)
+        avanzar:= avanzar + 1
+
+        Mientras NFDS(sec1) hacer
+
+            Para i:= 0 hasta avanzar, 1 hacer
+                avz(sec1, aux2s1)
+            FinPara
+
+            Mientras aux2s1 <> " " hacer
+                aux3s1:= aux2s1
+                avz(sec1, aux2s1)
+            FinMientras
+        
+        FinMientras
+
+        Si aux1s1 = aux3s1 entonces
+            escribir(sal, aux1s1)
+
+            Mientras s1 <> " " hacer
+                escribir(sal, s1)
+                avz(sec1, s1)
+                avanzar:= avanzar + 1
+            FinMientras
+
+        Sino
+            Mientras s1 <> " " hacer
+                avz(sec1, s1)
+                avanzar:= avanzar + 1
+            FinMientras
+        FinSi
+
+    FinMientras
+
+    avz(sec1, s1)
+    avanzar:= avanzar + 1
+    escribir(sal, " ")
+
+    Si bandera entonces
+
+        Mientras s1 <> " " hacer
+
+            Mientras NFDS(sec2) hacer
+
+                Para i:= 0 hasta avanzar2, 1 hacer
+                    avz(sec2, aux1s2)
+                FinPara
+
+                Si aux1s2 en digito entonces
+                    bandera2:= True
+                Sino
+                    avz(sec2, aux1s2)
+                FinSi
+
+            FinMientras
+            bandera:= False
+
+            Si bandera2 entonces
+
+                Mientras s2 <> " " hacer
+                    escribir(sal, s2)
+                    avz(sec2, s2)
+                    avanzar2:= avanzar2 + 1
+                FinMientras
+
+                avz(sec2, s2)
+                avanzar2:= avanzar2 + 1
+
+                bandera:= False
+            
+            Sino
+                Mientras s2 <> " " hacer
+                    avz(sec2, s2)
+                    avanzar2:= avanzar2 + 1
+                FinMientras
+
+                avz(sec2, s2)
+                avanzar2:= avanzar2 + 1
+
+                bandera:= True
+
+            FinSi
+
+        FinMientras
+
+        avz(sec1, s1)
+        avanzar2:= avanzar2 + 1
+        escribir(sal, " ")
+    
+    Sino
+        Mientras s2 <> " " hacer
+            avz(sec2, s2)
+            avanzar2:= avanzar2 + 1
+        FinMientras
+
+        avz(sec2, s2)
+        avanzar2:= avanzar2 + 1
+    FinSi
+
+FinMientras
+
+cerrar(todo)
+
+FinAccion

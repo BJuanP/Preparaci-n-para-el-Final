@@ -1,0 +1,99 @@
+
+
+Accion Articulos Es
+Ambiente
+
+Articulos = Registro
+    CodProd
+    Tipo
+    Marca
+    Desc
+    CantUni
+FinRegistro
+
+ArchA1, ArchA2, ArchASal: Archivo de Articulos ordenado por CodProd
+RegA1, RegA2, RegASal: Articulos
+
+CantSuc1, CantSuc2, CantUni: N(8)
+
+
+PROCESO
+
+ABRIR E/(ArchA1)
+ABRIR E/(ArchA1)
+Leer(ArchA1, RegA1)
+Leer(ArchA2, RegA2)
+ABRIR /S(ArchASal)
+
+//PONGO TODO A CERO LAS VARAIBLES
+
+Mientras NFDA(ArchA1) y NFDA(ArchA2) hacer
+
+    Si (RegA1.CodProd < RegA2.CodProd) entonces 
+
+        RegASal:= RegA1
+        GRABAR(ArchASal, RegASal)
+        CantSuc1:= RegA1.CantUni
+        TotalUni:= CantSuc1
+
+        Escribir(RegA1.CodProd, RegA1.Tipo, RegA1.Marca, RegA1.Desc, CantSuc1, 0, TotalUni)
+        Leer(ArchA1, RegA1)
+
+    Sino
+        Si (RegA1.CodProd > RegA2.CodProd) entonces 
+            RegASal:= RegA2
+            GRABAR(ArchASal, RegASal)
+            CantSuc2:= RegA2.CantUni
+            TotalUni:= CantSuc2
+
+            Escribir(RegA2.CodProd, RegA2.Tipo, RegA2.Marca, RegA2.Desc, 0, CantSuc2, TotalUni)
+            Leer(ArchA2, RegA2)
+
+        Sino
+           
+            CantSuc1:= RegA1.CantUni
+            CantSuc2:= RegA2.CantUni
+            TotalUni:= CantSuc1 + CantSuc2
+
+            RegASal:= RegA1
+            RegASal.CantUni:= TotalUni
+            GRABAR(ArchASal, RegASal)
+
+            Escribir(RegA1.CodProd, RegA1.Tipo, RegA1.Marca, RegA1.Desc, CantSuc1, CantSuc2, TotalUni)
+            Leer(ArchA1, RegA1)
+            Leer(ArchA2, RegA2)
+
+        FinSi
+    FinSi
+FinMientras
+
+Mientras NFDA(ArchA1) hacer
+
+    RegASal:= RegA1
+    GRABAR(ArchASal, RegASal)
+    CantSuc1:= RegA1.CantUni
+    TotalUni:= CantSuc1
+
+    Escribir(RegA1.CodProd, RegA1.Tipo, RegA1.Marca, RegA1.Desc, CantSuc1, 0, TotalUni)
+    Leer(ArchA1, RegA1)
+
+FinMientras
+
+Mientras NFDA(ArchA2) hacer
+
+    RegASal:= RegA2
+    GRABAR(ArchASal, RegASal)
+    CantSuc2:= RegA2.CantUni
+    TotalUni:= CantSuc2
+
+    Escribir(RegA2.CodProd, RegA2.Tipo, RegA2.Marca, RegA2.Desc, 0, CantSuc2, TotalUni)
+    Leer(ArchA2, RegA2)
+
+FinMientras
+
+CERRAR(ArchA1)
+CERRAR(ArchA2)
+CERRAR(ArchASal)
+
+FinAccion.
+    

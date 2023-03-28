@@ -1,0 +1,27 @@
+
+
+Accion consonante Es
+AMBIENTE
+
+alfa: Secuencia de Caracteres
+a: Caracter
+c: Entero
+vocal: {"A","E","I","O","U"}
+
+PROCESO
+
+ARR(alfa) 
+AVZ(alfa, a) 
+c:= 0
+
+MIENTRAS a <> "Z" HACER
+    SI a NO EN vocal ENTONCES
+        c:= c + 1;
+    FS;
+    AVZ(alfa, a);
+FM;
+
+ESCRIBIR ("La cantidad de consonantes en la secuencia es:", c);
+CERRAR(alfa);
+
+Fin_Accion.

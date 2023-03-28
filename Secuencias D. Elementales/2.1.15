@@ -1,0 +1,39 @@
+
+
+Accion palabra es
+Ambiente
+
+sec: secuncia de caracter
+s: caracter
+
+totalP: entero
+contO: entero
+contP: entero
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+
+Mientras NFDS(sec) hacer
+    Mientras s <> "." hacer
+        Mientras s <> " " hacer 
+            AVZ(sec, s)
+        FinMientras
+
+        contP:= contP + 1
+        AVZ(sec, s)
+    FinMientras
+
+    totalP:= totalP + contP
+    contP:= 0
+    contO:= contO +1
+    AVZ(sec, s)
+
+FinMientras
+
+Escribir("La cantidad promedio de palabras por oración es de: ", totalP/contO)
+
+CERRAR(sec)
+
+FinAccion

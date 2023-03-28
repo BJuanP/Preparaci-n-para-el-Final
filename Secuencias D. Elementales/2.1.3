@@ -1,0 +1,30 @@
+
+
+Accion descarte es
+ambiente
+
+sec: secunecia de caracter
+s: caracter
+
+nsec: secuencia de caracter
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+CREAR(nsec)
+
+Mientras NFDS(sec) hacer
+
+    Si s <> '$' entonces
+        ESCRIBIR(nsec, s)
+    FInSI
+
+    AVZ(sec, s)
+
+FinMientras
+
+CERRAR(nsec)
+CERRAR(sec)
+
+FinAccion

@@ -1,0 +1,37 @@
+
+
+Accion socios es
+ambiente
+
+sec, sal: secuencia de entero
+s, n1, n2, comp: entero
+
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+CREAR(sal)
+
+n1:= s
+avz(sec, s)
+n2:= s
+
+Mientras NFDS(sec) hacer
+
+    comp:= n1+1
+
+    Si comp = n2 entonces
+        n1:= n2
+        avz(sec, s)
+        n2:= s
+    Sino
+        Escribir(sec, comp)
+    FinSi
+
+FinMientras
+
+CERRAR(sec)
+CERRAR(sal)
+
+FinAccion

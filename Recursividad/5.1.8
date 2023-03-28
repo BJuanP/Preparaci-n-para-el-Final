@@ -1,0 +1,11 @@
+
+
+Funcion Vector(Arr: Arreglo [1..10] de entero, long: entero):entero Es
+
+    Si long = 1 entonces
+        Vector:= Arr[long]
+    Sino
+        Vector:= Arr[long] + Vector(Arr, long-1)
+    FinSI 
+
+FinFuncion

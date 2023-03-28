@@ -1,0 +1,55 @@
+Accion operaciones es
+Ambiente
+
+opcion: caracter
+resultado
+
+procedimiento Menu() es
+
+    Imprimir("Seleccione suma, resta, division, multiplicacion")
+
+FinProcedimiento
+
+funcion suma(n1, n2: entero):entero es
+    suma:= n1+n2
+finfuncion
+
+funcion resta(n1, n2: entero):entero es
+    resta:= n1-n2
+finfuncion
+
+funcion division(n1, n2: entero):entero es
+    division:= n1/n2
+finfuncion
+
+funcion multiplicacion(n1, n2: entero):entero es
+    multiplicacion:= n1*n2
+finfuncion
+
+
+PROCESO
+
+menu()
+
+Imprimir("Ingrese s, r, d o m")
+leer(opcion)
+
+Imprimir("Ingrese 2 valores")
+Leer(v1)
+leer(v2)
+
+segun (opcion) hacer
+
+    "s": resultado:= suma(v1, v2)
+
+    "r": resultado:= resta(v1, v2)
+
+    "d": resultado:= division(v1, v2)
+
+    "m": resultado:= multiplicacion(v1, v2)
+
+FinSegun
+
+Imprimir("El resultado de su operacion es :", resultado)
+
+FinAccion

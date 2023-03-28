@@ -1,0 +1,68 @@
+
+
+Accion empleados Es
+Ambiente
+
+sec1, sec2, sal: secuencia de caracteres
+s1, s2: caracter
+
+bandera: bool
+
+PROCESO
+ARR(sec1)
+ARR(sec2)
+AVZ(sec1, s1)
+AVZ(sec2, s2)
+CREAR(sal)
+
+bandera:= True
+
+Mientras NFDS(sec1) hacer
+
+    Si bandera entonces
+
+        Para i:= 1 hasta 8 hacer
+            Escribir(sal, s2)
+            avz(sec2, s2)
+        FinPara
+
+        escribir(sal, ",")
+
+        Mientras s1 <> " " hacer
+            Escribir(sal, s1)
+            avz(sec1, s1)
+        FinMientras
+
+        Mientras s1 = " " hacer
+            avz(sec1, s1)
+        FinMientras
+
+        escribir(sal, "#")
+
+        bandera:= False
+    
+    Sino
+
+        Para i:= 1 hasta 8 hacer
+            avz(sec2, s2)
+        FinPara
+
+        Mientras s1 <> " " hacer
+            avz(sec1, s1)
+        FinMientras
+
+        Mientras s1 = " " hacer
+            avz(sec1, s1)
+        FinMientras
+
+        bandera:= True
+
+FinMientras
+
+Escribir("Secuencia de salida generada con exito")
+
+cerrar(sec1)
+cerrar(sec2)
+cerrar(sal)
+
+FinAccion 

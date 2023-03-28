@@ -1,0 +1,84 @@
+
+
+ACCION pelisplus ES
+
+AMBIENTE
+
+Fecha = Registro
+	Aa: N (4)
+	Mm, Dd: N (2)
+Fin_Registro
+
+Peliculas = Registro 
+	NroPel: N(5)
+	Titulo: AN (10)
+	Genero: AN (15)
+	Cant_Copias: N (5)
+	Fecha_Estreno: Fecha
+Fin_Registro
+
+ArchP, ArchE, ArchS: Archivo de tipo Peliculas organizado por NroPel
+RegP, RegPN, RegSal: Peliculas 
+
+
+PROCESO 
+
+Abrir E/(ArchP)
+Abrir E/(ArchE)
+Abrir/S (ArchS)
+Leer(ArchP, RegP)
+Leer(ArchE, RegPN)
+
+Mientras NFDA(ArchP) y NFDA(ArchPN) hacer
+
+	Si (RegP.NroPel < RegPN.NroPel) entonces
+		RegSal:= RegP
+		GRABAR(ArchS, RegSal)
+		Leer(ArchP, RegP)
+	Sino 
+		RegSal:= RegPN
+		GRABAR(ArchS, RegSal)
+		Leer(ArchPN, RegPN)
+	FinSi
+
+Fin_Mientras
+
+Mientras NFDA(ArchP) hacer
+	RegSal:= RegP
+	GRABAR(ArchS, RegSal)
+	Leer(ArchP, RegP)
+FinMientras
+
+Mientras NFDA(ArchP) hacer
+	RegSal:= RegPN
+	GRABAR(ArchS, RegSal)
+	Leer(ArchP, RegPN)
+FinMientras
+
+Cerrar (ArchP)
+Cerrar (ArchE)
+Cerrar (ArchS)
+
+FinAccion.
+
+
+
+
+
+PRUEBA DE ESCRITORIO
+
+
+34 nashe			36 goku       
+63 perreo			57 jijantes   
+		Fin		    67 alpaca     
+				    89 cusco
+                            Fin
+
+
+34 nashe
+36 goku
+57 jijantes
+63 perreo
+67 alpaca
+89 cusco
+

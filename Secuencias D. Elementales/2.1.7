@@ -1,0 +1,37 @@
+
+Accion cuit es
+Ambiente
+
+sec: secuencia de entero
+s: entero
+
+sal: secuencia de enteros
+
+grupo: {"0", "1", "2", "3"}
+
+PROCESO
+
+ARR (sec)
+AVZ (sec, s)
+CREAR (sal)
+
+
+Mientras s <> "0" hacer
+
+    cuit:= s
+    ultn:= (cuit MOD 100) div 10
+
+    Si ultn EN grupo entonces
+
+        Escribir(sal, cuit)
+    
+    FInSI
+
+    avz (sec, s)
+
+FinMientras
+
+ESCRIBIR("Nueva secuencia generada con exito");
+
+CERRAR ambas
+FinAccion

@@ -1,0 +1,40 @@
+
+accion caracteres Es
+Ambiente
+
+sec: secuncia de caracter
+s: caracter
+
+cantP: entero
+controlador: entero
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+
+cantP:= 0
+controlador:= 0
+
+Mientras NFDS(sec) hacer
+
+    Mientras s <> " " hacer
+        controlador:= controlador + 1
+        avz(sec, s)
+    FinMientras
+
+    Si controlador = 4 entonces
+        cantP:= cantP + 1
+        avz(sec, s)
+    Sino
+        avz(sec, s)
+    FinSi
+
+    controlador:= 0
+
+FinMientras
+
+CERRAR(sec)
+Escribir("La cantidad de palabras de 4 letras es de: ", cantP)
+
+FinAccion

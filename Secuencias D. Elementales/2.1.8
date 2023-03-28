@@ -1,0 +1,56 @@
+Accion cuit es
+Ambiente
+
+sec: secuencia de entero
+s: entero
+
+sal: secuencia de caracteres
+c: caracter
+
+grupo: {"0", "1", "2", "3"}
+
+ultN: entero
+auxE: entero
+auxC: caracter
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+CREAR(sal)
+
+Mientras (s <> "0") hacer
+    cuit:= s
+    ultn:= (cuit MOD 100) div 10
+
+    Si ultN EN grupo entonces
+        Para i:= 1 hasta 11, 1 hacer
+            auxE:= s div 10**(11-i)
+            auxE:= auxE mod 10
+
+            segun (auxE) hacer
+                0 : auxC:= "0";
+                1 : auxC:= "1";
+                2 : auxC:= "2";
+                3 : auxC:= "3";
+                4 : auxC:= "4";
+                5 : auxC:= "5";
+                6 : auxC:= "6";
+                7 : auxC:= "7";
+                8 : auxC:= "8";  
+                9 : auxC:= "9";
+            FInSegun
+
+            Escribir(sal, auxC)
+
+        FinPara
+        Escribir(sal, "-")
+    FInSI
+    avz(sec, s)
+FinMientras
+
+ESCRIBIR("Nueva secuencia generada con exito");
+CERRAR(sec)
+CERRAR(sal)
+
+FinAccion

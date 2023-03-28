@@ -1,0 +1,82 @@
+
+
+Accion secuencias(sec: secuencia de caracter) Es
+Ambiente
+
+s: caracter
+
+sal1: secuencia de caracter
+
+sal2: secuencia de entero
+
+contVoc, contPal, contOra, totalP: entero
+
+vocal: {"a", "e", "i", "o", "u"}
+
+PROCESO
+
+ARR(sec)
+AVZ(sec, s)
+CREAR(sal1)
+CREAR(sal2)
+
+contVoc:= 0
+contPal:= 0
+contOra:= 0
+
+Mientras NFDS(sec) hacer
+    Mientras s <> "." hacer
+
+        Si s en vocal entonces
+
+            Mientras s <> " " hacer
+
+                Si s en vocal entonces
+                    Escribir(sal1, "#")
+                    avz(sec, s)
+                    contVoc:= contVoc + 1
+                sino
+                    escribir(sal1, s)
+                    avz(sec, s)   
+                FinSi
+            
+            FinMientras
+
+            Mientras s = " " hacer
+                avz(sec, s)
+            FinMientras
+
+            escribir(sal2, contVoc)
+            contVoc:= 0
+
+        Sino
+
+            Mientras s <> " " hacer
+                avz(sec, s)
+            FinMientras
+
+            Mientras s = " " hacer
+                avz(sec, s)
+            FinMientras
+
+        FinSi
+
+        contPal:= contPal + 1
+
+    FinMientras
+
+    avz(sec, s)
+    avz(sec, s)
+
+    totalP:= totalP + contPal
+    contPal:= 0
+    contOra:= contOra + 1
+FinMientras
+
+cerrar(sec)
+cerrar(sal1)
+cerrar(sal2)
+
+Escribir("Las 2 secuencias de salida se generaron con exito")
+
+FinAccion

@@ -1,0 +1,44 @@
+
+
+Procedimiento EnOrden(p: puntero a T) Es
+    Si p <> Nill entonces
+        EnOrden(*p.Izq)
+        Escribir(*p.valor)
+        EnOrden(*p.Der)
+    FinSi
+FinSi
+
+
+p = F
+p = C
+p = A
+por pantalla:= A
+p = B
+por pantalla:= B
+por pantalla:= C
+por pantalla:= F
+p = I
+p = G
+por pantalla:= G
+p = H
+por pantalla:= H
+por pantalla:= I
+
+
+Procedimiento PreTest(p: puntero a T) Es
+    Si p <> Nill entonces
+        Escribir(*p.valor)
+        PreTest(*p.Izq)
+        PreTest(*p.Der)
+    FinSi
+FinSi
+
+
+Procedimiento PostOrden(p: puntero a T) Es
+    Si p <> Nill entonces
+        PostOrden(*p.Izq)
+        PostOrden(*p.Der)
+        Escribir(*p.valor)
+    FinSi
+FinSi
+

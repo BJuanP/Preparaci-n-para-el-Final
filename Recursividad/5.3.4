@@ -1,0 +1,17 @@
+
+
+1. Post Orden: 9,32,28,52,10,70,40
+
+
+2. En Orden: 9,28,32,40,52,70,10
+
+
+3. 
+Procedimiento EnOrden(p: puntero a T) Es
+Si p <> Nill entonces
+    EnOrden(*p.Izq)
+    Escribir(*p.valor)
+    EnOrden(*p.Der)
+FinSi
+FinProcedimiento
+

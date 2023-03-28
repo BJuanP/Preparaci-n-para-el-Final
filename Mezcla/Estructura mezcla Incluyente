@@ -1,0 +1,49 @@
+
+
+
+
+Ambiente
+
+Archivo1
+Archivo2
+ArchivoSal
+
+Procedimiento LeerReg1() Es
+    Leer(A1,Reg1)
+    Si FDA(A1) entonces
+        Reg1:= HV
+    FinSi
+FinProcedimiento
+
+Procedimiento LeerReg2() Es
+    Leer(A2,Reg2)
+    Si FDA(A2) entonces
+        Reg2:= HV
+    FinSi
+FinProcedimiento
+
+PROCESO
+
+Mientras NFDA(Archivo1) o NFDA(ArchA2) hacer
+
+    Si (Reg1.Cod < Reg2.Cod) entonces      //Reg1 menor
+        RegSal:= Reg1
+        GRABAR(ArchivoSal, RegSal)
+        LeerReg1()
+    Sino
+        Si (Reg1.Cod > Reg2.Cod) entonces    //Reg2 menor
+            RegSal:= Reg2
+            GRABAR(Archivo2, RegSal)
+            LeerReg2()
+        Sino
+            RegSal:= Reg1  O  RegSal:= Reg2   //Reg1 = Reg2
+            RegSal.Datos:= Reg1.datos + Reg2.datos
+            GRABAR(ArchASal, RegSal)
+
+            LeerReg1()
+            LeerReg2()
+        FS
+    FS
+FM
+
+CERRAR(todos)

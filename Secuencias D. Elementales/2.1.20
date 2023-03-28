@@ -1,0 +1,85 @@
+
+
+Accion oraciones Es
+Ambiente
+
+sec1: secuencia de caracter
+sec2: secuencia de caracter
+s1: caracter
+s2: caracter
+
+sal: secuencia de caracter
+
+contOEnt1, contOEnt2, contOSal: entero
+
+PROCESO
+ARR(sec1)
+ARR(sec2)
+AVZ(sec1, s1)
+AVZ(sec2, s2)
+CREAR(sal)
+
+Mientras NFDS(sec1) y NFDS(sec2) hacer
+
+    Mientras (s1 <> ",") hacer
+        Escribir(sal, s1)
+        AVZ(sec1, s1)
+    FinMientras
+
+    Mientras (s2 <> ",") hacer
+        AVZ(sec1, s1)
+    FinMientras
+
+    AVZ(sec1, s1)
+    AVZ(sec2, s2)
+    Escribir(sal, ",")
+
+    Mientras (s2 <> ".") hacer
+        Escribir(sal, s1)
+        AVZ(sec1, s1)
+    FinMientras
+
+    Mientras (s1 <> ".") hacer
+        AVZ(sec1, s1)
+    FinMientras
+    
+    AVZ(sec1, s1)
+    AVZ(sec2, s2)
+    Escribir(sal, ",")
+
+    contOSal:= contOSal + 1
+
+FinMientras
+
+
+Mientras NFDS(sec1) hacer
+
+    Mientras (s1 <> ".") hacer
+        avz(sec1, s1)
+    FinMientras
+
+    avz(sec1, s1)
+    contOEnt1:= contOEnt1 + 1
+
+FinMientras
+
+Mientras NFDS(sec2) hacer
+
+    Mientras (s2 <> ".") hacer
+        avz(sec2, s2)
+    FinMientras
+
+    avz(sec2, s2)
+    contOEnt2:= contOEnt2 + 1
+
+FinMientras
+
+cerrar(sec1)
+cerrar(sec2)
+cerrar(sal)
+
+Escribir("la cantidad de oraciones de la primer secuencia es de: ", contOEnt1)
+Escribir("la cantidad de oraciones de la segunda secuencia es de: ", contOEnt2)
+Escribir("la cantidad de oraciones de la secuencia de salida es de: ", contOsal)
+
+FinAccion

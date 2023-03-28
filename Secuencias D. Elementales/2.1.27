@@ -1,0 +1,123 @@
+
+
+Accion tarjeta Es
+Ambiente
+
+
+sec: secuencia de caracter
+s, aux: caracter
+
+numeroCom, numero, numeroBU, suma: entero
+
+sal: secuencia de caracter
+
+bandera, bandera2: bool
+
+aux1, aux2: entero
+
+dig: caracter
+
+PROCESO 
+
+ARR(sec)
+avz(sec, s)
+CREAR(sal)
+
+suma:= 0
+bandera:= True
+
+//ponemos todo a cero y eso
+
+Mientras NFDS(sec) hacer
+
+    bandera2:= False
+
+    Para i:= 15 hasta 0, -1 hacer
+
+        aux:= s
+
+        segun (aux) hacer
+            "0": numero:= 0;
+            "1": numero:= 1;
+            "2": numero:= 2;
+            "3": numero:= 3;
+            "4": numero:= 4;
+            "5": numero:= 5;
+            "6": numero:= 6;
+            "7": numero:= 7;
+            "8": numero:= 8;
+            "9": numero:= 9;
+        FinSegun
+
+        numero:= numero * (10**(i))
+        numeroCom:= numeroCom + numero
+        avz(sec, s)
+
+    FinPara
+
+    numeroBU:= numeroCom
+
+    Para i:= 1 hasta 16, 1 hacer
+
+        Si bandera entonces
+
+            aux1:= numeroCom mod 10
+            numeroCom:= numeroCom div 10
+
+            suma:= suma + aux1
+
+            bandera:= False
+
+        Sino
+
+            aux1:= numeroCom mod 10
+            numeroCom:= numeroCom div 10
+
+            aux1:= aux1 * 2
+
+            Si aux1 > 9 entonces
+                aux1:= aux1 - 9
+            FinSi
+
+            suma:= suma + aux1
+
+            bandera:= True
+        
+        FinSi
+
+    FinPara
+
+    Si (suma =< 150) y ((suma mod 10) = 0) entonces
+        bandera2:= True
+    FinSi
+
+    Si bandera2 entonces
+
+        Para i:= 15 hasta 0, -1 hacer
+
+            aux2:= numeroBU div 10**(i)
+            numeroBU:= numeroBU mod 10**(i+1)
+
+            segun (aux2) hacer
+                0: dig:= "0";
+                1: dig:= "1";
+                2: dig:= "2";
+                3: dig:= "3";
+                4: dig:= "4";
+                5: dig:= "5";
+                6: dig:= "6";
+                7: dig:= "7";
+                8: dig:= "8";
+                9: dig:= "9";
+            FinSegun
+
+            escribir(sal, dig)
+
+        FinPara
+        bandera2= False
+
+    Sino
+        suma:= 0
+    FinSi
+
+FinMientras

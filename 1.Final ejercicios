@@ -1,0 +1,62 @@
+
+
+
+1er ejercicio
+
+una empresa que necesitaba informar los productos que pertenecian a la canasta familiar que estaban en mejores precios (mas baratos)
+
+archivos:
+
+PRODUCTOS: descripcion, ID y canasta("Si", "No")
+(INDEXADO POR ID)
+
+LOCAL: IDE, zona y razon social
+(INDEXADO POR IDE Y zona)
+
+PRECIO: ID(prod), IDE(local), precio
+(INDEXADO por los 3)
+
+-se pedía guardar los productos que pertenecen a la canasta familiar en una lista junto con el precio del producto
+como hay producto iguales, habia que ordenar la lista por nombre de producto(desc).
+
+-mostrar los 3 mejores precios de cada producto: Para esto había que recorrer la lista, e ir buscando los productos y de alguna forma mostrar los 3 que mejor precio tenian
+En caso de que solo haya 1 producto, mostrar un solo precio. Lo mismo si solo hay 2 o 3 productos.
+En caso de que haya producto que tengan el mismo precio y entre dentro de los 3 precios minimos, mostrar tambien esos y el nombre del local
+
+-Informar la zona(local) que tenga mejores precios.
+Esto pensé guardarlo en un arreglo de tamaño 5 e ir contabilizando las zonas, para después aplicar una busqueda del mayor numero de precios bajos
+
+
+
+
+2do ejercicio
+
+nos dieron un archivo ordenado por clave compleja (Site, area y Ver)
+Site:= AN(10)
+Area:= AN(5)
+Ver:= ("W"(web), "M"(Mobile))
+
+Además un registro más que era importante era: CantTickets:= N(3)
+
+-Teníamos que realizar un corte de control para obtener los totales parciales de la cantidad de tickets y el total general de ellos
+
+-Además teniamos que generar un archivo de salida, con formato:= SITE, TotalTickets
+O sea que cada vez que se llegaba al corte Site, había que cargar ese nombre y cargar el total parcial obtenido hasta ahí.
+
+
+
+
+3er ejercicio
+Nos dan un recorrido en preorden y enorden
+
+-armar el arbol
+-dar el recorrido en postorden
+-escribir una funcion recursiva que cuente todos los nodos de un arbol
+
+
+
+
+
+Hacerme un cuadro resumen con los procesos de corte, mezcla, actualización, etc.
+Lenguajes solamente aprender Pascal.
+Noe dijo que el segundo ejercicio era un corte sencillo, de los que hay en la guía, así que no sé qué será un corte más complejo(?

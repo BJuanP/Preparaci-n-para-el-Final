@@ -1,0 +1,17 @@
+
+
+Funcion Par(n:entero):logico Es
+
+    Si n = 0 entonces
+        Par:= True
+    Sino
+        Si ((n MOD 10) MOD 2) = 0 entonces
+            Par:= Par(n DIV 10)
+        Sino
+            Par:= False
+        FinSi
+    FinSi
+
+FinFuncion
+
+

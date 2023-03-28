@@ -1,0 +1,29 @@
+
+
+Procedimiento Lista(Prim, Ult: puntero a NODO) Es
+
+Si Ult = Prim entonces
+    Escribir(*Prim.Nombre)
+Sino
+    Escribir(*Ult.Nombre)
+    Ult:= *Ult.ant
+    Lista(Prim, Ult)
+FinSi
+
+FinProcedimiento
+
+
+
+//OTRA FORMA
+
+
+
+Procedimiento Lista(Prim: puntero a NODO) Es
+
+Si Prim <> Nil entonces
+    Lista(*Prim.prox)
+    Escribir(*Prim.Nombre)
+FinSi
+
+FinProcedimiento
+
