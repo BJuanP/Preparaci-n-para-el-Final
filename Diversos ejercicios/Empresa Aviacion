@@ -1,0 +1,84 @@
+
+
+Accion VUelos() Es
+Ambiente
+
+Vuelos = Registro
+    CodV:
+    CantPDisp
+FinRegistro
+
+Reservas = Registro
+    CodV:
+    DNIP:
+    AYN:
+    CantPSol:
+FinReg
+
+AV: Arcivo de Vuelos indexado por CodV
+AR: Archivo de Reservas ordenado por CodV y DNIP
+
+RV: Vuelos
+RR: Reservas
+
+pasajes, pasajespp: entero
+AuxRR1: AN(8)
+AuxRR2: N(8)
+Nombre: AN(60)
+
+PROCESO
+ABRIR E/S(AV)
+ABRIR E/(AR)
+Leer(AR, RR)
+
+//Inicializar variables
+
+Mientras NFDA(AR) hacer
+
+    RV.CodV:= RR.CodV                                      //CONSULTO SI EL CODIGO DE VUELO EXISTE EN EL ARCHIVO VUELOS
+    Leer(AV,RV)
+
+    Si EXISTE entonces
+    
+        AuxRR1:= RR.CodV                                      //GUARDO EL CODIGO Y EL DNI
+        AuxRR2:= RR.DNIP
+        Nombre:= RR.AYN
+        Mientras (AuxRR1 = RR.CodV) hacer
+            Pasajes:= Pasajes + RR.CantPSol                         //ALMACENO LA CANITDAD DE PASAJES SOLICITADOS POR CODIGO DE VUELO PARA REGRABAR Y POR PASAJERO PARA MOSTRAR
+            Pasajespp:= Pasajespp + RR.CantPSol
+
+            Si AuxRR2 <> RR.DNIP entonces
+                Escribir(AuxRR2, RR.AYN, RR.CodV, Pasajespp)
+                AuxRR2:= RR.DNIP
+                Pasajespp:= 0
+            FinSi
+            Leer(AR, RR)
+        FinMientras
+
+        RV.CantPDisp:= RV.CantPDisp - Pasajes
+        REGRABAR(AV, RV)
+    Sino
+        Escribir("Error. No existe el codigo de vuelo")
+        Leer(AR, RR)
+    FinSi
+FinMientras
+CERRAR(AR)
+
+Mayor:= LV
+Mientras NFDA(AV) hacer
+    AuxRR1:= RV.CodV
+    Mientras (AuxRR1 = RV.CodV) hacer
+        Pasajes:= Pasajes + RV.CantPDisp
+        Leer(AR, RR)
+    FinMientras
+    
+    Si Pasajes > Mayor entonces
+        Mayor:= Pasajes
+        CodMayor:= AuxRR1
+    FinSi
+FinMientras
+CERRAR(AV)
+
+Escribir("El codigo de vuelo que mayor disponibilidad de pasajes tiene es: ", CodMayor)
+
+FinAccion.

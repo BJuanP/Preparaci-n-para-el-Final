@@ -1,0 +1,87 @@
+
+
+Accion Conjunto(Prim1: puntero a NODO1) Es
+Ambiente
+
+NODO1 = Registro
+    Valor: N(8)
+    prox: puntero a NODO1
+FinRegistro
+
+NODO2 = Registro
+    Valor: N(8)
+    prox, ant: puntero a NODO2
+FinRegistro
+
+q1: puntero a NODO1
+
+Prim2, Ult2, q2, p2: puntero a NODO2
+PromMay, PromMen, Prom: N
+
+PROCESO
+
+Prom:= 0
+PromMay:= LV
+PromMen:= HV
+
+q1:= Prim1
+Prim2:= Nill
+Ult2:= Nill
+
+Para i:= 1 hasta 6, 1 hacer
+
+    ValorQ:= *q1.Valor
+    Para j:= 1 hasta ValorQ, 1 hacer
+        Prom:= Prom + *(*q1.prox).valor
+        q1:= *q1.prox
+    FinPara
+    Prom:= Prom div ValorQ
+
+    Si Prom > PromMay entonces
+        PromMay:= Prom
+    FinSi
+    Si Prom < PromMen entonces 
+        PromMen:= Prom
+    FinSi
+
+    Nuevo(q2)
+    *q1.Valor:= Prom
+
+    Si Prim2 = Nill entonces
+        *q2.prox:= Nill
+        *q2.ant:= Nill
+        Prim2:= q2
+        Ult2:= q2
+    Sino
+        p2:= Prim2
+
+        Mientras (p2 <> Nill) y (*q2.Valor > *p2.valor) hacer
+            p2:= *p2.prox
+        FinMientras
+
+        Si p2 = Prim2 entonces
+            *q2.prox:= Prim2
+            *q2.ant:= Nill
+            *p2.ant:= q2
+            Prim2:= q2
+        Sino
+            Si p2 = Nill entonces
+                *q2.ant:= Ult2
+                *q2.prox:= Nill
+                *Ult2.prox:= q2
+                Ult2:= q2
+            Sino
+                *q2.prox:= p2
+                *q2.ant:= *p2.ant
+                *(*p2.ant).prox:= q2
+                *p2.ant:= q2
+            FinSi
+        FinSi
+    FinSi
+
+FinPara
+
+Escribir("El promedio mayor es: ", PromMay)
+Escribir("El promedio menor es: ", PromMen)
+
+FinAccion

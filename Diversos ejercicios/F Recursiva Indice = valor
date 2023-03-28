@@ -1,0 +1,28 @@
+
+
+Funcion Indice(a: Arreglo [1..TOPE] de entero, i: entero):logico Es
+
+    Si i > TOPE entonces
+        Indice:= False
+    Sino
+        Si i = a[i] entonces
+            Indice:= True
+        Sino
+            Indice:= Indice(a, i+1)
+        FinSi
+    FinSi
+
+FinFuncion
+
+
+
+definicion formal
+
+Caso base
+False    Si TOPE < i
+True     Si i = a[i]
+
+caso recursivo
+
+a[i+1]  Si i =< TOPE
+

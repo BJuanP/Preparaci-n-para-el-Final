@@ -1,0 +1,110 @@
+
+
+Accion Supermercado Es
+Ambiente
+
+Productos = Registro
+    CodProd
+    Nombre
+    Stock
+    Precio
+FinRegistro
+
+Ticket = Registro
+    NroTicket
+    Fecha
+    Cliente
+FinRegistro
+
+DetalleTicket = Registro
+    NroTicket
+    NroLinea
+    CodProd
+    Cantidad
+FinRegistro
+
+ArchProd: Archivo de Productos indexado por CodProd
+ArchTicket: Archivo de Ticket indexado por NroTicket
+ArchDetTick: Archivo de DetalleTicket indexado por NroTicket
+
+RegProd: Productos
+RegTicket: Ticket
+RegDetTick: DetalleTicket
+
+CodProducto: N
+Resp1: AN(1)
+Resp2: AN(1)
+Cantidad: N(4)
+
+
+PROCESO
+
+ABRIR E/S(ArchProd)
+ABRIR /S(ArchTicket)
+ABRIR /S(ArchDetTick)
+
+Escribir("Desea comenzar a operar? S/N")
+Leer(Resp1)
+
+Mientras (Resp1 = "S") hacer
+
+    RegTicket.NroTicket:= OBTENER_TICKET()
+    RegTicket.Fecha:= FechaActual()
+    RegTicket.Cliente:= "Consumidor Final"
+    GRABAR(ArchTicket, RegTicket)
+
+    Escribir(Empresa: pupito   CUIT: nashe   Fecha: actual)
+    Escribir(Cliente: Nombre cliente)
+
+    Escribir("Desea comenzar a ingresar productos? S/N")
+    Leer(Resp1)
+
+    RegDetTick.NroLinea:= 1
+    Total:= 0
+
+    Mientras (Resp2 = S) hacer
+
+        Escribir("Ingrese el codigo del producto")
+        Leer(CodProducto)
+        RegProd.CodProd:= CodProducto
+        Leer(ArchProd, RegProd)
+
+        SubTotal:= 0
+
+        Si EXISTE entonces
+
+            Escribir("Ingrese la cantidad del producto")
+            Leer(Cantidad)
+
+            RegProd.Stock:= RegProd.Stock - Cantidad
+            REGRABAR(ArchProd, RegProd)
+
+            SubTotal:= RegProd.Precio * Cantidad
+            Total:= Total + SubTotal 
+            
+            RegDetTick.Cantidad:= Cantidad
+            RegDetTick.NroLinea:= RegDetTick.NroLinea + 1
+            RegDetTick.NroTicket:= RegTicket.NroTicket
+            RegDetTick.CodProd:= RegProd.CodProd          
+            GRABAR(ArchDetTick, RegDetTick)
+
+            Escribir("Producto: ", RegProd.Nombre, "Cantidad: ", Cantidad, "Subtotal: ", SubTotal)
+            
+        Sino    
+            Escribir("Error. Producto inexistente")
+        FinSi
+
+        Escribir("Desea ingresar otro producto? S/N")
+        Leer(Resp)
+
+    FinMientras
+
+    Escribir("Total: " Total)
+    Escribir("Desea registrar otra compra? S/N")
+    Leer(Resp2)
+
+FinMientras
+
+CERRAR(TODO)
+
+FinAccion.

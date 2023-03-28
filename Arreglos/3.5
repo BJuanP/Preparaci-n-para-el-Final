@@ -1,0 +1,35 @@
+
+
+Accion DobleArreglo(A: Arreglo [1..30] de reales, B: Arreglo [1..30] de reales) Es
+Ambiente
+
+C: Arreglo [1..60] de reales
+
+Num1: N
+Num2: N
+
+PROCESO
+
+ContA:= 0
+ContB:= 0
+
+Para i:= 1 hasta 6, 1 hacer
+
+    Num1:= A[i-ContA]
+    Num2:= B[i-ContB]
+
+    Si (Num1 > Num2) entonces
+        C[i]:= Num2
+        ContA:= ContA + 1
+    Sino
+        Si (Num1 = Num2) entonces
+            C[i]:= Num2
+            ContA:= ContA + 1
+        Sino
+            C[i]:= Num1
+            ContB:= ContB + 1
+        FinSi
+    FinSi
+FinPara
+
+FinAccion

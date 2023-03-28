@@ -1,0 +1,120 @@
+Accion Farmacia ES
+Ambiente
+
+Fecha = Registro
+    dd: N(2)
+    mm: N(2)
+    aa: N(4)
+FinReg
+
+Clave = Registro
+    Farmacia: AN(20)
+    Med: AN(20)
+FinRegistro
+
+MaeRemedios = Registro
+    Clave: Clave
+    CantAct: N(8)
+    FechaVen: Fecha
+FinReg
+
+Movimientos = Registro
+    Clave: Clave
+    CodMov: ("1", "2", "3")
+    CantRecibida: N(8)
+FinReg
+
+RemVen = Registro
+    Med: AN(20)
+    CantVen: N(6)
+FinReg
+
+
+ArchMae, ArchSal: Archivo de MaeRemedios ordenado por Clave
+RegMae, RegSal: MaeRemedios
+
+ArchMov: Archivo de Movimientos ordenado por Clave y CodMov
+RegMov: Movimientos
+
+ArchVen: Archivo de RemVen ordenado por Med
+RegVen: RemVen
+
+
+Procedimiento LeerMae Es
+    Leer(ArchMae, RegMae)
+    Si FDA(ArchMae) entonces
+        RegMae:= HV
+    FinSi
+FinProcedimiento
+
+Procedimiento LeerMov Es
+    Leer(ArchMov, RegMov)
+    Si FDA(ArchMov) entonces
+        RegMov:= HV
+    FinSi
+FinProcedimiento
+
+
+PROCESO
+
+Abrir E/(ArchMae)
+Abrir E/(ArchMov)
+Abrir /S(Rem_Ven)
+Abrir /S(ArchSal)
+
+LeerMae
+LeerMov
+
+Mientras (RegMae <> HV) o (RegMov <> HV) Hacer
+
+    Si (RegMae.Clave) < (RegMov.Clave) entonces
+        RegSal:= RegMae
+        GRABAR(ArchSal, RegSal)
+        LeerMae
+    Sino
+        Si (RegMae.Clave) = (RegMov.Clave) entonces
+
+            Segun (RegMov.CodMov) Hacer
+
+                "1": Escribir("Error. Alta no permitida")
+                     RegSal:= RegMae
+                     GRABAR(ArchSal, RegSal)
+
+                "2": RegVen.Med:= RegMae.Med
+                     RegVen.CantVen:= RegMae.CantAct
+                     GRABAR(ArchVen, RegVen)
+
+                "3": RegSal:= RegMae
+                     RegSal.CantAct:= RegMov.CantRecibida
+                     GRABAR(ArchSal, RegSal)
+
+            FinSegun
+
+            LeerMae
+            LeerMov
+        
+        Sino
+
+            "1": RegSal.Clave:= RegMov.Clave
+                 RegSal.CantAct:= RegMov.CantRecibida
+                 RegSal.FechaVen:= FechaActual() + 30
+                 GRABAR(ArchSal, RegSal)
+
+            "2": Escribir("Error. Baja no permitida")
+
+            "3": Escribir("Error. Modificacion no permitida")
+
+            LeerMov
+
+        FinSi
+
+    FinSi
+
+FinMientras
+
+Cerrar(ArchMae) 
+Cerrar(ArchMov)
+Cerrar(ArchVen)
+Cerrar(ArchSal)
+
+FinAccion

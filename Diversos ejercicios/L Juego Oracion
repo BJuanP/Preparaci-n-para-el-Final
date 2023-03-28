@@ -1,0 +1,156 @@
+
+Accion JuegoO(Prim1, Ult1: puntero a NODO1) Es
+Ambiente
+
+NODO1 = Registro
+    AYN: AN(30)
+    prox: puntero a NODO1
+FinRegistro
+
+p1: puntero a NODO1
+
+
+NODO2 = Registro
+    Car: AN(1)
+    prox: puntero a NODO2
+FinRegistro
+
+Prim2, q2, p2: puntero a NODO2
+
+
+Procedimiento INSERTAR(Prim, q: puntero a NODO1) Es
+Ambiente
+    p, ant: puntero a NODO1
+PROCESO
+    Si Prim = Nil entonces
+        *q.prox:= Nil
+        Prim:= q
+    Sino
+        p:= Prim
+        ant:= Nil
+        Mientras (p <> Nil) hacer
+            ant:= p
+            p:= *p.prox
+        FM 
+        *ant.prox:= q
+        *q.prox:= Nil
+    FS
+FP
+
+Procedimiento Eliminar(Prim, Ult: puntero a NODO1, Nombre: AN(30))Es
+Ambiente
+    p, ant: puntero a NODO1
+PROCESO
+    p:= Prim
+    ant:= Nil
+    Mietnras (*p.AYN <> Nombre) hacer
+        ant:= p
+        p:= *p.prox
+    FM
+    Si p = Prim entonces
+        Prim:= *p.prox
+        *Ult.prox: *p.prox
+    Sino
+        Si p = Ult entonces
+            Ult:= ant
+            *Ult.prox:= Prim
+        Sino
+            *ant.prox:= *p.prox
+        FS
+    FS
+FP
+
+bandO, bandE: logico
+Nombre: AN(30)
+Ing: AN(1)
+Pal, AuxPal: entero
+ContJ: entero
+
+PROCESO
+
+//FALTA INICIALIZAR TODO
+
+
+Mientras (Ronda < 20) y (ContJ > 1) hacer
+
+    p1:= Prim1
+    Mientras (*p1.prox <> Prim) hacer
+
+        Nombre:= *p1.AYN
+
+        Mientras (Ing <> "+") hacer            
+            Esc("Ingrese la oracion caracter por caracter e ingrese '+' para finalizar")
+            Leer(Ing)
+            
+            Nuevo(q2)
+            *q2.Car:= Ing
+            INSERTAR(Prim2, q2)             //Ingresamos toda la oracion
+
+            Si bandO entonces
+                INSERTAR(Prim3, q2)             //Ingresamos toda la oracion pro primera vez
+            FinSi
+
+        FM
+
+        *q2.Car:= " "                 //Cuento una palabra y la separo con espacio
+        INSERTAR(Prim2, q2)
+        *q3.Car:= " "
+        INSERTAR(Prim3, q3)
+        Pal:= Pal+1
+        
+
+        p2:= Prim2
+        p3:= Prim3                          //Corrobo si lo que ingresó de la oracion corresponde con lo que ya se habia dicho
+        AuxPal:= 0
+        Mientras (p3 <> Nil) hacer
+            Si (*p2.Car <> *p3.Car) entonces
+                bandE:= True               //Por si las oraciones no llegan a ser iguales
+            FinSi
+
+            Si (*p3.Car = " ") entonces
+                AuxPal:= AuxPal+1
+            FinSi
+
+            p2:= *p2.prox
+            p3:= *p3.prox
+            
+        FM
+
+        Si bandE o (AuxPal <> Pal) entonces
+            Escribir("El jugador: ", Nombre, " ha sido eliminado")
+            ELIMINAR(Prim1, Ult1, Nombre)   //Elimino jugador
+            Prim2:= Nil                     //Elimino la oracion hasta ahora
+            Prim3:= Nil                                     
+            bandO:= True
+            Pal:= 0
+            ContJ:= ContJ-1
+        Sino
+            p2:= Prim2                      //Cargo la oracion correcta en las 2 listas
+            Prim3:= Nil                          
+            Mientras (p2 <> Nil) hacer
+                Nuevo(q3)
+                *q3.Car:= *p2.Car
+                INSERTAR(Prim3, q3)
+                p2:= *p2.prox
+            FM
+        FinSi
+
+        p1:= *p1.prox
+        ContJ:= ContJ + 1        
+    FM
+    Ronda:= Ronda + 1
+FM
+
+p1:= Prim1
+Esc("Los jugadores ganadores son: ")
+Mientras (*p1.prox <> Prim1) hacer
+    Esc(*p1.AYN)
+FM
+
+Esc("La oracion final es: ")
+p2:= Prim2
+Mientras (p2 <> Nil) hacer
+    Esc(*p2.Car)
+FM
+
+FA.

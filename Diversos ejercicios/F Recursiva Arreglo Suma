@@ -1,0 +1,27 @@
+
+
+Funcion SumaPar(arr: arreglo [1..10], long: entero):Entero Es
+
+Si long > 0 entonces
+    Si (long MOD 2) = 0 entonces
+        SumaPar:= arr[long] + SumaPar(arr[long], long-2)
+    FinSi
+Sino
+    SumaPar:= 0
+FinSi
+
+FinFuncion
+
+
+
+Más sencillo
+
+Función Suma(V: arreglo [1..10], l: entero): entero Es
+
+    Si l:= 2 entonces
+        Suma:= V[1]
+    Sino
+        Suma:= V[l] + Suma(V, l-2)
+    FinSi
+
+FinFunción

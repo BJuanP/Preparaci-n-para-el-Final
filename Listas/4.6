@@ -1,0 +1,148 @@
+
+
+Acccion Suma(Prim: puntero a Clientes) Es
+Ambiente
+
+FECHA = Registro
+
+Clientes = Registro
+    NombreCli:
+    TotalCon:
+    NroMesa:
+    prox: puntero a Clientes
+FinRegistro
+
+p, q, ant: puntero a Clientes
+
+TotalParcial: N
+Opcion: {"A", "R", "C", "E"}
+bandera: AN(1)
+Nombre
+
+
+Procedimiento Añadir(Var:AN) Es
+
+    Nuevo(q)
+    *q.NombreClie:= Nombre
+    *q.TotalCon:= 0
+    *q.NroMesa:= ContMesa
+
+    Si Prim = Nill entonces
+        *q.prox:= Prim
+        Prim:= q
+    Sino
+        p:= Prim
+        ant:= Nill
+
+        Mientras (p <> Nill) y (Nombre > *p.NombreCli) hacer
+            ant:= p
+            p:= *p.prox
+        FinMientras
+
+        Si p = prim entonces
+            *q.prox:= prim
+            prim:= q
+        Sino
+            Si p = Nill
+                *ant.prox:= q
+                *q.prox:= Nill
+            Sino
+                *ant.prox:= q
+                *q.prox:= p
+            FinSi
+        FinSi
+    FinSi
+FinProcedimiento
+
+
+Procedimiento RegistrarConsumo(Var: AN, Con: N) Es
+
+    q:= Prim
+    Mientras (Nombre <> *q.NombreCli) hacer
+        ant:= q
+        q:= *q.prox
+    FinMientras
+
+    *q.TotalCon:= *q.TotalCon + Con
+
+FinProcedimiento
+
+
+Procedimiento EmitirTicket(Nombre) Es
+
+    q:= Prim
+    Mientras (Nombre <> *q.NombreCli) hacer
+        ant:= q
+        q:= *q.prox
+    FinMientras
+
+    Escribir("Ticket: " *q.NombreCli, FechaActual(), *q.NroMesa, *q.TotalCon)
+
+FinProcedimiento
+
+
+Procedimiento Eliminar(Var:AN) Es
+
+    Si Prim = Nill entonces
+        Escribir("Lista vacía")
+    Sino
+        p:= Prim
+        ant:= Nill
+
+        Mientras (p <> Nill) y (Nombre > *p.NombreCli) hacer
+            ant:= p
+            p:= *p.prox
+        FinMientras
+
+        Si Nombre = *p.NombreCli entonces
+            Si p = Prim entonces
+                prim:= *p.prox
+            Sino
+                *ant.prox:= *p.prox
+            FinSi
+        
+        Disponer(p)
+
+        Sino
+            Escribir("El cliente no está")
+        FinSi
+    FinSi
+
+FinProcedimiento
+
+
+PROCESO
+
+bandera:= "S"
+ContMesa:= 0
+
+Mientras bandera = "S" hacer
+
+    Escribir("Qué operacion desea realizar? A/R/C/E")
+    Leer(Opcion)
+
+    Escribir("Escriba su nombre: ")
+    Leer(Nombre)
+
+    Segun (Opcion) hacer
+
+        "A":ContMesa:= ContMesa + 1
+            Añadir(Nombre)
+
+        "R":Escribir("Por favor señor cliente, ingrese el monto consumido")
+            Leer(Consumo)
+            RegistrarConsumo(Nombre, Consumo)
+
+        "C":EmitirTicket(Nombre)
+            
+        "E":ContMesa:= ContMesa - 1
+            Eliminar(Nombre)
+
+    FinSegun
+
+    Escribir("Desea seguir? S/N")
+    Leer(bandera)
+
+FinMientras
+
+FinAccion.

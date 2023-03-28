@@ -1,0 +1,74 @@
+
+
+Accion Plantas Es
+Ambiente
+
+FECHA = Registro
+    dd: N(2)
+    mm: N(2)
+    aa: N(4)
+FinRegistro
+
+Compras = Registro
+    NroFactura:
+    Proveedor:
+    Fecha: FECHA
+    NroPlanta
+    Importe
+FinRegistro
+
+ArchCompras: Archivo de Compras
+RegCompras: Compras
+
+Matriz: Arreglo [1..13, 1..4, 1..4] de entero
+
+
+PROCESO
+
+ABRIR E/(ArchCompras)
+LEER(ArchCompras, RegCompras)
+
+Para i:= 1 hasta 4, 1 hacer
+    Para j:= 1 hasta 4, 1 hacer
+        Para k:= 1 hasta 13, 1 hacer
+            Matriz[i,j,k]:= 0 
+        FinPara
+    FinPara
+FinPara
+
+Mientras NFDA(ArchCompras) hacer
+    
+    Mes:= RegCompras.Fecha.mm
+    Planta:= RegCompras.NroPlanta
+    
+    Segun (RegCompras.Proveedor) hacer
+        "A":Proveedor:= 1
+        "B":Proveedor:= 2
+        "C":Proveedor:= 3
+    FinSegun
+
+    Matriz[Mes,Proveedor,Planta]:= Matriz[Mes,Proveedor,Planta] + RegCompras.Importe
+    Matriz[13,Proveedor,Planta]:= Matriz[13,Proveedor,Planta] + RegCompras.Importe
+    Matriz[Mes,4,Planta]:= Matriz[Mes,4,Planta] + RegCompras.Importe
+    Matriz[13,4,Planta]:= Matriz[13,4,Planta] + RegCompras.Importe
+    Leer(ArchCompras, RegCompras)
+
+FinMientras
+
+CERRAR(ArchCompras)
+
+Para i:= 1 hasta 4, 1 hacer
+    Escribir("En la planta: ", i)
+
+    Para j:= 1 hasta 3, 1 hacer
+        Escribir("Del Proveedor: ", j," el monto total fue de: ", Matriz[13,j,i])
+    FinPara
+
+    Para k:= 1 hasta 12, 1 hacer
+        Escribir("En el mes: ", k," el monto total fue de: " Matriz[k,4,i])
+    FinPara
+
+    Escribir("El total por año es de: ", Matriz[13,4,i])
+FinPara
+
+FinAccion.      

@@ -1,0 +1,71 @@
+
+
+Accion Cola Es
+Ambiente
+
+NODO = Registro
+    valor: N
+    prox: puntero a NODO
+FinRegistro
+
+p, q, ant, prim: puntero a NODO
+
+op: (1, 2)
+continuar: ("S", "N")
+
+
+procedimiento Insertar() Es
+Nuevo(q)
+Escribir("Ingrese el valor: ")
+Leer(*q.valor)
+
+Si prim = Nill entonces
+    Prim:= q
+    *q.prox:= Nill
+Sino
+    p:= Prim
+
+    Mientras p <> Nill hacer
+        ant:= p
+        p:= *p.prox
+    FinMientras
+    *ant.prox:= q
+    *q.prox:= p
+FinSi
+FinProcedimiento
+
+
+procedimiento Extrar() Es
+Ambiente
+Si prim = Nill entonces
+    Escribir("Lista Vacía")
+Sino
+    p:= Prim
+    Escribir(*p.valor)
+    Prim:= *p.prox
+    Disponer(P)
+    Escribir("Elemento extraido")
+FinSi
+FinProcedimiento
+
+
+PROCESO
+
+prim:= nil
+
+Repetir
+    esc("lista encolada, eliga que desea hacer:");
+    esc("1-insertar")
+    esc("2-extraer")
+
+    leer(op)
+    SEGUN op HACER
+        1: insertar()
+        2: extraer()
+    FinSi
+
+    esc("desea continuar? s/n:")
+    leer(continuar)
+Hasta que continuar = "N"
+
+FinAccion.

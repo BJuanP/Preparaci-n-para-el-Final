@@ -1,0 +1,89 @@
+
+
+Accion Supermercado(Caja: Arreglo [1..10] de CajaR) Es
+Ambiente
+
+CajaR = Registro
+    ApeYNom:
+    NroCaja:
+    Importe:
+    HorarioFac:
+FinRegistro
+
+ArchCajaR: Archivo de CajaR ordenado por ApeYNom
+RegCajaR: CajaR
+
+MatrizSal: Arreglo [1..11, 1..6] de entero
+
+Hora: AN(5)
+x: N(1)
+
+Funcion Hora(num: entero):alfanumerico Es
+    Segun (num) hacer
+        1: Hora:= "8-10"
+        2: Hora:= "10-12"
+        3: Hora:= "12-16"
+        4: Hora:= "16-18"
+        5: Hora:= "18-20"
+    FinSegun
+FinFuncion
+
+
+PROCESO
+
+ABRIR E/(ArchCajaR)
+Leer(ArchCajaR, RegCajaR)
+
+Para i:= 1 hasta 11 hacer
+    Para j:= 1 hasta 6 hacer
+        MatrizSal[i,j]:= 0
+    FinPara
+FinPara
+
+Mientras NFDA(ArchCajaR) hacer
+
+    Segun (RegCajaR.HorarioFac) hacer
+        <10: j:= 1
+        <12: j:= 2
+        <16: j:= 3
+        <18: j:= 4
+        <20: j:= 5
+    FinSegun
+
+    i:= RegCajaR.NroCaja
+
+    MatrizSal[i,j]:= MatrizSal[i,j] + RegCajaR.Importe    //IMPORTE EN POSICION DE MATRIZ
+
+    MatrizSal[11,j]:= MatrizSal[11,j] + RegCajaR.Importe  //TOTAL PARCIAL DE HORAS
+
+    MatrizSal[i,6]:= MatrizSal[i,6] + RegCajaR.Importe    //TOTAL PARCIAL DE CAJA
+
+    MatrizSal[11,6]:= MatrizSal[11,6] + RegCajaR.Importe  //TOTAL GENERAL
+
+    Leer(ArchCajaR, RegCajaR)
+
+FinMientras
+
+CERRAR(ArchCajaR)
+
+Para i:= 1 hasta 10 hacer
+    Para j:= 1 hasta 6 hacer
+        
+        Si j = 6 entonces
+            Escribir("El total parcial de la caja: ", i ," es de: ", MatrizSal[i,6])
+        Sino
+            Escribir("La caja numero: ", i, " facturó un total de: ", MatrizSal[i,j]," en la franja de horario: ", Hora(j))
+        FinSi
+    
+    FinPara 
+FinPara
+
+x:= 1
+Mientras (x < 6) hacer
+    x:= x+1
+    Escribir("El total parcial de la hora: ", Hora(x) ," es de: ", MatrizSal[11,x])
+FinMientras  
+
+Escribir("El total general es de: ", MatrizSal[11,6])
+
+FinAccion.

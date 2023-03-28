@@ -1,0 +1,28 @@
+
+
+Accion Nashe(Matriz: Arreglo [1..5, 1..5] de entero) Es
+Ambiente
+
+NuevaM: Arreglo [1..2, 1..5] de entero
+
+TotParCol: N(6)
+TotalGen: N(6)
+
+PROCESO
+
+TotParFila:= 0
+TotParCol:= 0
+
+Para i:= 1 hasta 5, 1 hacer
+    Para j:= 1 hasta 5, 1 hacer
+        TotParFila:= TotParFila + Matriz[i,j]
+        TotParCol:= TotParCol + Matriz[j,i]
+    FinPara
+    
+    Matriz[1,i]:= TotParFila
+    Matriz[2,i]:= TotParCol
+    TotParFila:= 0
+    TotParCol:= 0
+FinPara
+
+FinAccion.

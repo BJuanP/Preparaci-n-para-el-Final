@@ -1,0 +1,37 @@
+
+Prim:= Nil
+Nuevo (q)
+Leer(*q.valor)
+
+Si PRIM = Nil entonces
+    Prim:= q
+    *q.prox:= Nil
+Sino
+    p:= Prim
+    ant:= Nil
+    Leer(Valor)  //valor a buscar
+
+    Mientras (p <> Nil) y (valor > *p.valor) hacer
+        ant:= p
+        p:= *p.prox
+    FinMientras
+    
+    Si p = Prim entonces
+        *q.prox:= Prim
+        Prim:= q
+    Sino
+        Si p = Nil entocnes
+            *ant.prox:= q
+            *q.prox:= Nil
+        Sino
+            *ant.prox:= q
+            *q.prox:= p
+        FinSi
+    FinSi
+FinSi
+
+valor > *p.valor  LISTA ORDENADA ASCENDENTE
+valor < *p.valor  LISTA ORDENADA DESCENDENTE
+
+
+

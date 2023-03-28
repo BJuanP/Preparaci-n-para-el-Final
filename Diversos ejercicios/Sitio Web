@@ -1,0 +1,94 @@
+
+
+Accion SitioWeb(ArrEnt: Arreglo [1..20] de Desc) Es
+
+Fecha = Registro
+    dd
+    mm
+    aa
+FinRegistro
+
+Opiniones = Registro
+    User:
+    FechaOp: Fecha
+    FechaUltComp: Fecha
+    Calif:
+    ServCalif:
+FinRegistro
+
+Usuarios = Registro
+    User:
+    ApeyNom
+    Cat:
+FinRegistro
+
+ArchOp: Archivo de Opiniones ORDENADO por User, FechaOp
+ArchUser: Archivo de Usuarios INDEXADO por User
+RegOp: Opiniones
+RegUser: Usuarios
+
+Desc: AN(60)
+ArrSal: Arreglo [1..20] de entero
+
+ContOp: entero
+NroUser: N(8)
+Mayor: entero
+
+PROCESO
+
+ABRIR E/(ArchOp)
+ABRIR /S(ArchUser)
+Leer(ArchOp, RegOp)
+
+ContOp:= 0
+
+Para i:= 1 hasta 20, 1 hacer           //Poner matriz a cero
+    ArrSal[i]:= 0
+FinPara
+
+Si (RegOp.Calif < 3) entonces
+    ArrSal[RegOp.ServCalif]:= ArrSal[RegOp.ServCalif] + 1
+FinSi
+
+Mientras NFDA(Opiniones) hacer
+
+    NroUser:= RegOp.User                     
+
+    Mientras (NroUser <> RegOp.User) hacer   //Contar las opiniones
+        Leer(ArchOp, RegOp)
+        ContOp:= ContOp + 1
+
+        Si (RegOp.Calif < 3) entonces
+            ArrSal[RegOp.ServCalif]:= ArrSal[RegOp.ServCalif] + 1
+        FinSi
+    FinMientras
+
+    Si (ContOp > 5) entonces                 //Actualizar el archivo opiniones
+        RegUser.User:= RegOp.User
+        Leer(ArchUser, RegUser)
+
+        Si EXISTE entonces
+            RegUser.Cat:= "Gold"
+            RE-GRABAR(ArchUser, RegUser)
+        Sino
+            Escribir("ERROR. Usuario inexistente")
+        FinSi
+    FinSi
+
+    ContOp:= 0
+FinMientras
+
+Mayor:= LV
+Pos:= 0
+
+Para i:= 1 hasta 20, 1 hacer
+    Si (ArrSal[i] > Mayor) entonces
+        Mayor:= ArrSal[i]
+        Pos:= i
+    FinSi
+FinPara
+
+Escribir("El servicio con mayor cantidad de calificaciones mínimas es: ", ArrEnt[i].Desc)
+Cerrar(ArchOp)
+Cerrar(ArchUser)
+FinAccion.

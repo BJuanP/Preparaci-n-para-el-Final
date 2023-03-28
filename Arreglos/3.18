@@ -1,0 +1,120 @@
+
+
+Accion Agenda Es
+Ambiente
+
+Agenda: Arreglo [1..50] de AgendaElec
+
+AgendaElec = Registro
+    Nombre
+    Direccion
+    Telefono
+FinRegistro
+
+bandera: logico
+bandera2: logico
+respuesta:= AN(1)
+nombreCliente: AN(30)
+DireccionCliente: AN(60)
+TelefonoCliente: N(10)
+
+
+
+PROCESO
+
+bandera:= True
+
+Mientras bandera hacer
+
+    Escribir("Qué operacion desea hacer? (consulta, modificacion, eliminacion, agregar) C/M/E/A")
+    Leer(respuesta)
+
+    Escribir("Ingrese el nombre del cliente")
+    Leer(nombreCliente)
+
+    Segun (respuesta) hacer
+
+        "C":Para i:= 1 hasta 50, 1 hacer
+                Si (Agenda[i].Nombre = nombreCliente) entonces
+                    Escribir("El cliente: ", Agenda[i].Nombre," se encuentra en la posicion: ", i)
+                    Escribir("Su direccion es: ", Agenda[i].Direccion, " y su Telefono: ", Agenda[i].Telefono)
+                FinSi
+            FinPara
+
+        "M":Posicion:= 1
+            Mientras (Posicion < 50) y (nombreCliente > Agenda[Posicion].Nombre)
+                Posicion:= Posicion + 1
+            FinMientras
+
+            Si (nombreCliente = Agenda[Posicion].Nombre) entonces
+                
+                Escribir("Qué desea modificar? N/D/T")
+                Leer(respuesta)
+
+                Segun (respuesta) hacer
+                    "N":Escribir("Ingrese el nuevo nombre: ")
+                        Leer(nombreCliente)
+                        Agenda[Posicion].Nombre:= nombreCliente
+
+                    "D":Escribir("Ingrese la nueva direccion: ")
+                        Leer(direccionCliente)
+                        Agenda[Posicion].Direccion:= direccionCliente
+
+                    "T":Escribir("Ingrese el nuevo telefono: ")
+                        Leer(telefonoCliente)
+                        Agenda[Posicion].Telefono:= telefonoCliente
+                FinSegun
+            FinSi
+
+        "E":Posicion:= 1
+            Mientras (Posicion < 50) y (nombreCliente > Agenda[Posicion].Nombre)
+                Posicion:= Posicion + 1
+            FinMientras
+
+            Agenda[Posicion].Nombre:= " "
+            Agenda[Posicion].Direccion:= " "
+            Agenda[Posicion].Telefono:= 0
+
+        "A":Posicion:= 0
+            Para i:= 1 hasta 50, 1 hacer
+                Si (Agenda[i].Nombre = " ") entonces
+                    Posicion:= i
+                FinSi
+            FinPara
+
+            Si (Posicion <> 0) entonces
+                Escribir("Ingrese el nombre: ")
+                Leer(nombreCliente)
+                Escribir("Ingrese la direccion: ")
+                Leer(direccionCliente)
+                Escribir("Ingrese el telefono: ")
+                Leer(telefonoCliente)
+
+                Agenda[Posicion].Nombre:= nombreCliente
+                Agenda[Posicion].Direccion:= direccion
+                Agenda[Posicion].Telefono:= telefonoCliente
+            Sino
+                Escribir("La agenda ya está llena")
+            FinSi    
+    FinSegun
+
+    bandera2:= False
+    Mientras NO bandera2 hacer
+        bandera2:= True
+        Para j:= 1 hasta (50-1) hacer
+            Si Agenda[j] > Agenda[j+1] hacer
+                x:= Agenda[j]
+                Agenda[j]:= Agenda[j+1]
+                Agenda[j+1]:= x
+                bandera2:= False
+            FinSi
+        FinPara
+    FinMientras
+
+    Escribir("Desea seguir operando? S/N")
+    Leer(respuesta)
+    Si (respuesta = "N") entonces
+        bandera:= False
+    FinSi
+FinMientras
+FinAccion.

@@ -1,0 +1,65 @@
+
+
+Accion Peliculas (Pelis: Arreglo [1..100] de Pelicula) Es
+
+Pelicula = Registro
+    Titulo: AN(60)
+    NombreDirec
+    Categoria
+    CantVistas
+    Alquilado
+FinRegistro
+
+ArchPel: Archivo de Pelicula ordenado por Titulo
+RegPel: Pelicula
+
+Pel: AN(60)
+Posicion: N(3)
+Izq: N(3)
+Der: N(3)
+Medio: N(3)
+Resp1: AN(1)
+Resp2: AN(1)
+
+PROCESO
+
+Escribir("Desea atender un pedido? S/N")
+Leer(Resp)
+
+Mientras (Resp1 = "S") hacer 
+
+    Escribir("Desea devolver una pelicula o alquilar una pelicula? D/A")
+    Leer(Resp2)
+
+    Escribir("Ingrese el nombre de la pelicula")
+    Leer(Peli)
+
+    Izq:= 1
+    Der:= 100
+    Medio:= (Izq + Der) DIV 2
+
+    Mientras (Izq < Der) y (Peli <> Arreglo[medio].Titulo)
+        Si (Peli < Arreglo[medio].Titulo) entonces
+            Der:= medio - 1
+        Sino
+            Izq:= medio + 1
+        FinSi
+        medio:= (Izq + Der) DIV 2
+    FinMientras
+
+    Si (Peli = Arreglo[medio].Titulo) entonces
+        Posicion:= medio
+    FinSi
+
+    Si (Resp2 = "A") entonces
+        Si (Arreglo[medio].Alquilado = "Si") entonces
+            Escribir("La pelicula que buscó está alquilada")
+        Sino
+            Escribir("La pelicula buscada no está alquilada")
+        FinSi
+    Sino
+        Arreglo[medio].CantVistas:= Arreglo[medio].CantVistas + 1
+    FinSi
+FinMientras
+
+FinAccion.

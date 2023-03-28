@@ -1,0 +1,60 @@
+
+
+Accion afiliados Es
+Ambiente
+
+PADRON = Registro
+    NomyApe: AN(60)
+    Clase: N(8)
+    DNI: N(8)
+    Dirección: AN(60)
+    NroMesa: N(6)
+    Observaciones: AN(60)
+    NroCir: N(6)
+    Partido: (0..3)
+FinRegistro
+
+ArchPadron: Archivo de PADRON
+RegPadron: PADRON
+
+SALIDA = Registro
+    NomyApe: AN(60)
+    DNI: N(8)
+    Dirección: AN(60)
+FinRegistro
+
+ArchSal1, ArchSal2: Archivo de SALIDA
+RegSal: SALIDA
+
+PROCESO
+
+ABRIR e/(ArchPadron)
+LEER(ArchPadron, RegPadron)
+ABRIR /s(ArchSal1)
+ABRIR /s(ArchSal2)
+
+Mientras NFDA(ArchPadron) hacer
+
+    Si (RegPadron.Partido = 3) entonces
+        RegSal.NomyApe:= RegPadron.NomyApe
+        RegSal.DNI:= RegPadron.DNI
+        RegSal.Direccion:= RegPadron.Direccion
+        ESCRIBIR(ArchSal1, RegSal)
+    FinSi
+
+    Si (RegPadron.Partido = 0) y (RegPadron.clase > 1940) entonces
+        RegSal.NomyApe:= RegPadron.NomyApe
+        RegSal.DNI:= RegPadron.DNI
+        RegSal.Direccion:= RegPadron.Direccion
+        ESCRIBIR(ArchSal2, RegSal)
+    FinSi
+
+    LEER(ArchPadron, RegPadron)
+
+FinMientras
+
+CERRAR(ArchPadron)
+CERRAR(ArchSal1)
+CERRAR(ArchSal2)
+
+FinAccion

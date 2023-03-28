@@ -1,0 +1,30 @@
+
+
+Accion Suma(Matriz: Arreglo [1..6,1..6] de entero) Es
+Ambiente
+
+TotParFila: N(6)
+TotParCol: N(6)
+TotalGen: N(6)
+
+PROCESO
+
+TotParFila:= 0
+TotParCol:= 0
+TotalGen:= 0
+
+Para i:= 1 hasta 5, 1 hacer
+    Para j:= 1 hasta 5, 1 hacer
+        TotParFila:= TotParFila + Matriz[i,j]
+        TotParCol:= TotParCol + Matriz[j,i]
+    FinPara
+    
+    TotalGen:= TotalGen + (TotParFila + TotParCol)
+    Matriz[i,6]:= TotParFila
+    Matriz[6,i]:= TotParCol
+    TotParFila:= 0
+    TotParCol:= 0
+FinPara
+Matriz[6,6]:= TotalGen
+
+FinAccion.

@@ -1,0 +1,71 @@
+
+
+Accion Hospital(Paciente: Arreglo [1..4, 1..7, 1..50] de entero) Es
+Ambiente 
+
+PacienteSal: Arreglo [1..50, 1..7] de entero
+
+AlturaMax: N(3)
+AlturaMin: N(3)
+NumLectMax: N(1)
+NumLectMin: N(1)
+DiaLectMax: N(1)
+DiaLectMin: N(1)
+Prom: N(3)
+
+Procedimiento Dia(numero: entero) Es
+    Segun (numero) hacer
+        1:Escribir("Domingo")
+        2:Escribir("Lunes")
+        3:Escribir("Martes")
+        4:Escribir("Miercoles")
+        5:Escribir("Jueves")
+        6:Escribir("Viernes")
+        7:Escribir("Sabado")
+    FinSegun
+FinProcedimiento
+
+PROCESO
+
+Para k:= 1 hasta 50, 1 hacer
+
+    AlturaMax:= LV
+    AlturaMin:= HV
+    NumLectMax:= 0
+    NumLectMin:= 0
+    DiaLectMax:= 0
+    DiaLectMin:= 0
+
+    Para j:= 1 hasta 7, 1 hacer
+
+        Prom:= 0
+
+        Para i:= 1 hasta 4, 1 hacer
+
+            Si (AlturaMax < Paciente[i,j,k]) entonces
+                AlturaMax:= Paciente[i,j,k]
+                DiaLectMax:= j
+                NumLectMax:= i
+            FinSi
+
+            Si (AlturaMin > Paciente[i,j,k]) entonces
+                AlturaMin:= Paciente[i,j,k]
+                DiaLectMin:= j
+                NumLectMin:= i
+            FinSi
+
+            Prom:= Prom + Paciente[i,j,k]
+
+        FinPara
+
+        Prom:= Prom/4
+        PacienteSal[k,j]:= Prom
+
+    FinPara
+
+    Escribir("Del paciente: ", k," la altura maxima fue de: ", AlturaMax, " el dia: ", Dia(DiaLectMax), " y fue en la lectura numero: ", NumLectMax)
+    Escribir("Del paciente: ", k," la altura minima fue de: ", AlturaMin, " el dia: ", Dia(DiaLectMin), " y fue en la lectura numero: ", NumLectMin)
+    
+FinPara
+
+FinAccion.

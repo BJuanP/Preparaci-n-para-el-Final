@@ -1,0 +1,54 @@
+
+Accion division es
+Ambiente
+
+
+F: entero
+G: entero
+
+AUX: entero
+
+coci: entero
+res: entero
+
+PROCESO
+
+Imprimir("iNGRESE 2 NUMEROS")
+leer(F)
+leer(G)
+
+
+AUX:= 0
+
+Si (F > 0) entonces
+    Si (G > 0) entonces
+
+        coci:= 0
+        res:= 0
+
+        AUX:= A
+        Mientras AUX > 0 hacer
+
+            Si AUX >= B entonces
+                coci:= coci + 1
+                AUX:= AUX - B
+            Sino
+                res:= AUX
+                AUX:= 0
+            FinSi
+        FinMientras
+
+    Sino
+        Imprimir("Error")
+    FinSi
+
+sino
+    coci:= 0
+    resto:= 0
+FinSi
+
+
+Imprimir("El cociente es: ", coci)
+Imprimir("El resto es: ", res)
+
+FinAccion

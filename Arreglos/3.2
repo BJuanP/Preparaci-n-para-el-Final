@@ -1,0 +1,52 @@
+
+
+Accion MayorValor Es
+Ambiente
+
+Arreglo: Arreglo [1..100] de entero
+MayorNum: N(6)
+MenorNum: N(6)
+PosicionMay: N(3)
+PosicionMen: N(3)
+aux: N(6)
+CantNumPares: N(3)
+
+PROCESO
+
+MayorNum:= LV
+MenorNum:= HV
+PosicionMay:= 0
+PosicionMen:= 0
+Aux:= 0
+Suma:= 0
+
+Para i:= 1 hasta 100, 1 hacer
+
+    Escribir("Ingrese un valor")
+    Leer(Arreglo[i])
+
+    Aux:= Arreglo[i]
+
+    Si Aux > MayorNum entonces
+        MayorNum:= Aux
+        PosicionMay:= i
+    FinSi
+
+    Si Aux < MenorNum entonces
+        MenorNum:= Aux
+        PosicionMen:= i
+    FinSi
+
+    Si ((Aux MOD 2) = 0) entonces
+        Suma:= Suma + Aux
+        CantNumPares:= CantNumPares + 1
+    FinSi
+
+FinPara
+
+Escribir("El numero de mayor valor es el: ", MayorNum, "y está en la posicion: ", PosicionMay)
+Escribir("El numero de menor valor es el: ", MenorNum, "y está en la posicion: ", PosicionMen)
+Escribir("La suma de todos los numeros pares es igual a: ", Suma)
+Escribir("La cantidad de numeros pares es de: ", CantNumPares)
+
+FinAccion.

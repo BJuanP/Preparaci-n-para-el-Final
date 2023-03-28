@@ -1,0 +1,22 @@
+
+
+Accion Matrices(A: Arreglo [1..5, 1..5] de entero, B: Arreglo [1..5, 1..5] de entero) Es
+Ambiente
+
+C: Arreglo [1..5, 1..5] de entero 
+
+PROCESO
+
+Para i:= 1 hasta 5, 1 hacer
+    Para j:= 1 hasta 5, 1 hacer
+        Si (i = j) entonces
+            C[i,j]:= 0
+        Sino
+            Si (i < j) entonces
+                C[i,j]:= A[i,j]
+            Sino
+                C[i,j]:= B[i,j]
+            FinSi
+        FinSi
+    FinPara
+FinPara

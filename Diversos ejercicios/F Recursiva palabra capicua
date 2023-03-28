@@ -1,0 +1,18 @@
+
+
+Funcion capicua(Pal: Arreglo[n] de caracter, n: entero, inicio: entero):logico Es
+
+Si n >= inicio entonces
+    capicua:= True
+Sino
+    Si Pal[inicio] = Pal[n] entonces 
+        capicua:= capicua(Pal, n-1, inicio+1)
+    Sino
+        capicua:= False
+    FinSi
+FinSi
+
+FinFuncion
+
+
+

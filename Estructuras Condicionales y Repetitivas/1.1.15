@@ -1,0 +1,114 @@
+
+Accion altura Es
+Ambiente
+
+cantP: entero
+alturaP: entero
+
+pies: real
+total: real
+
+PROCESO
+
+Imprimir("Ingrese la cantidad de pisos del edificio")
+leer(cantP)
+Imprimir("Ingrese la altura de cada piso")
+leer(alturaP)
+
+pies:= 3.28
+total:= 0
+
+total:= alturaP * pies
+total:= total * cantP
+
+Imprimir("la altura del edificio es de :", total)
+
+
+
+
+
+
+//DE FORMA QUE SE PUEDAN CALCULAR LA ALTURA DE 50 EDIFICIOS DISTINTOS
+
+Accion altura Es
+Ambiente
+
+cantP: entero
+alturaP: entero
+
+pies: real
+total: real
+
+PROCESO
+
+pies:= 3.28
+total:= 0
+
+para i:= 1 hasta 50, 1 hacer
+
+    Imprimir("Ingrese la cantidad de pisos del edificio")
+    leer(cantP)
+    Imprimir("Ingrese la altura de cada piso")
+    leer(alturaP)
+
+    total:= alturaP * pies
+    total:= total * cantP
+
+    Imprimir("la altura del edificio numero", i," es de : ", total)
+
+FinPara
+
+FinAccion
+
+
+
+
+
+
+//DE FORMA QUE SE PUEDA CALCULAR LA ALTURA DE INFINITOS EDIFICIOS
+
+Accion altura Es
+Ambiente
+
+cantP: entero
+alturaP: entero
+cont: entero
+
+pies: real
+total: real
+
+resp: alfanumerico
+band: bool
+
+PROCESO
+
+pies:= 3.28
+total:= 0
+cont:= 1
+
+band:= False
+
+REPETIR
+
+    Imprimir("Ingrese la cantidad de pisos del edificio")
+    leer(cantP)
+    Imprimir("Ingrese la altura de cada piso")
+    leer(alturaP)
+
+    total:= alturaP * pies
+    total:= total * cantP
+
+    Imprimir("la altura del edificio numero", cont," es de: ", total)
+
+    Imprimir("Desea ingresar otro edificio? s/n")
+
+    Si resp = n entonces
+        band:= True
+    FinSi
+
+    cont:= cont+1
+
+Hasta que band = True
+
+FinAccion
+

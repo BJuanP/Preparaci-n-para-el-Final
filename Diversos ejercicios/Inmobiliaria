@@ -1,0 +1,130 @@
+
+
+Accion Inmobiliaria() Es
+Ambiente
+
+Transacciones = Registro
+    Dep: N(6)
+    Ori: (1..3)
+    Nivel: (1..5)
+    Val: {"S", "N"}
+FinRegistro
+
+ArchTran: Archivo de Transacciones
+RegTran: Transacciones
+
+Datos = Registro
+    Val: N(6)
+    NoVal: N(6)
+FinRegistro
+
+Sal: Arreglo [1..5, 1..3] de Datos
+
+//faltan cargar las variables
+
+PROCESO 
+ABRIR E/(ArchTran)
+Leer(ArchTran, RegTran)
+
+Para i:= 1 hasta 5, 1 hacer         //Pongo a 0 la matriz 
+    Para j:= 1 hasta 3, 1 hacer
+        Sal[i,j].Val:= 0
+        Sal[i,j].NoVal:= 0
+    FinPara
+FinPara
+
+Mientras NFDA(ArchTran) hacer      //Cargo la matriz
+    
+    Nivel:= RegTran.Nivel
+    Origen:= RegTran.Ori
+
+    Segun (RegTran.Val) hacer
+        "S":Sal[Nivel,Origen].Val:= Sal[Nivel,Origen].Val + 1 
+        "N":Sal[Nivel,Origen].NoVal:= Sal[Nivel,Origen].NoVal + 1 
+    FinSegun
+
+    Leer(ArchTran, RegTran)
+FinMientras
+
+MenTran:= HV
+MenNiv:
+enOri:
+
+MayTran:= LV
+MayNiv:
+
+TotalTran:= 0
+
+Men1:= 0
+Men2:= 0
+Men3:= 0
+
+Para i:= 1 hasta 5, 1 hacer
+    Para i:= 1 hasta 3, 1 hacer
+
+        TotParTran:= Sal[i,j].Val + Sal[i,j].NoVal 
+        Si (TotParTran < MenTran) entonces         //(a)
+            MenTran:= TotParTran
+            MenNiv:= i
+            MenOri:= j
+        FinSi
+
+        Si (TotParTran > MayTran) entonces         //(b)
+            MayTran:= TotParTran
+            MayNiv:= i
+        FinSi
+
+        TotalTran:= TotalTran + TotParTran        //(c-1)
+
+        TotTranNiv:= TotTranNiv + TotParTran
+
+        Si (MayorTran < TotParTran) entonces      //(d-1)
+            MayorTran:= TotParTran
+        FinSi
+
+    FinPara
+    Men1:= Men1 + Sal[i,1].Val                    //(e)
+    Men2:= Men2 + Sal[i,2].Val
+    Men3:= Men3 + Sal[i,3].Val
+FinPara
+
+Escribir("La menor cantidad de transacciones se registró en el nivel: ", MenNiv, " y origen: ", MenOri)
+
+Escribir("El nivel con mayor cantidad de transacciones es el: ", MayNiv)
+
+Para i:= 1, hasta 5, 1 hacer                     //(c-2)
+    Para i:= 1 hasta 3, 1 hacer
+        TotParTran:= Sal[i,j].Val + Sal[i,j].NoVal
+        TotalNiv:= TotalNiv + TotParTran
+    FinPara
+    Escribir("El porcentaje del nivel: ", i, " sobre el total es de: ", (TotalNiv*100)/TotalTran)
+FinPara
+
+Para i:= 1 hasta 5, 1 hacer                     //(d) No se si está bien porque no entendí la consigna
+    Para j:= 1 hasta 3, 1 hacer
+        TotParTran:= Sal[i,j].Val + Sal[i,j].NoVal 
+        TotTranNiv:= TotTranNiv + TotParTran
+    FinPara
+
+    TotTranNiv:= TotParTran
+    AuxMay:= MayorTran + (MayorTran*0.10)
+
+    Si (TotTranNiv > AuxMay) entonces
+        Escribir("El nivel: ", i, " supera en un 10% al de mayor cantidad de transacciones")
+    FinSi
+FinPara
+
+
+Si (Men1 < Men2) y (Men1 < Men3) entonces
+    Menor:= 1
+Sino
+    Si (Men2 < Men1) y (Men2 < Men3)
+        Menor:= 2
+    Sino
+        Menor:= 3
+    FinSi
+FinSi
+Escribir("El origen que menor transacciones validas recibió es el: ", Menor)
+
+Cerrar(ArchTran)
+FinAccion.

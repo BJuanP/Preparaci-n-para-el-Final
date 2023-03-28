@@ -1,0 +1,49 @@
+
+
+Prim:= Nil
+
+Nuevo(q)
+Leer(*q.valor)
+
+Si Prim = Nil Entonces
+    Prim:= q 
+    *q.prox:= q
+Sino
+    p:= Prim
+    ant:= Nil
+    Leer(Valor)
+
+    Mientras (valor > *p.valor) y (*p.prox <> Prim) Hacer
+        ant:= p
+        p:= *p.prox
+    FinMientras
+
+    Si p = Prim Entonces
+        k:= Prim
+        Mientras (*k.prox <> Prim) Hacer
+            k:= *k.prox
+        FinMientras
+
+        *k.prox:= q
+        *q.prox:= Prim
+        Prim:= q
+    Sino
+        Si *p.prox = Prim Entonces
+            *q.prox:= Prim
+            *p.prox:= q
+        Sino
+            *ant.prox:= q
+            *q.prox:= p
+        FinSi
+    FinSi
+FinSi
+
+
+
+
+
+
+
+
+
+

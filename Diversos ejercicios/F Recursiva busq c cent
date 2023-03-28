@@ -1,0 +1,49 @@
+
+
+SOLUCION ITERATIVA
+
+funcion buscar(a: arreglo [1..TOPE] de entero, i: entero, valor: entero): entero Es
+
+    mientras (i < TOPE) y (a[i] <> valor) hacer
+        i:= i+1
+    FinMientras
+
+    Si a[i] = valor entonces
+        buscar:= i
+    sino
+        buscar:= -1
+    FinSi
+
+finFuncion
+
+
+
+
+SOLUCION RECURSIVA
+
+
+definicion formal
+
+caso base 
+-1   si i > TOPE
+
+i(posicion)  si a[i] = valor
+
+caso recursivo
+a[i-1]  si i < TOPE 
+
+
+funcion buscar(a: arreglo [1..TOPE] de entero, i: entero, valor: entero): entero Es
+
+    si i > TOPE entonces
+        buscar:= -1
+    Sino
+        Si a[i] = valor entonces
+            buscar:= i
+        Sino
+            buscar:= buscar(a, i+1, valor)
+        FinSi
+    FinSi
+
+finFuncion
+

@@ -1,0 +1,122 @@
+
+
+Accion Delivery(ArchEmp: Archivo de Empleado ORDENADO por DNI) Es
+Ambiente 
+
+Empleado = Registro
+    DNI: N(8)
+    Nombre: AN(30)
+    Antiguedad: N()
+FinRegistro
+
+RegEmp: Empleado
+
+NODO = Registro
+    NroPersonal
+    Nombre
+    Asignaciones
+    Antiguedad
+    prox, ant:= puntero a NODO
+FinRegistro
+
+Prim, Ult, p, q: puntero a NODO
+
+
+Procedimiento Insertar(nodo: puntero a NODO) Es
+
+nodo:= Prim
+
+Si Prim = Nill entonces
+    *nodo.prox:= Nill
+    *nodo.ant:= Nill
+    Prim:= nodo
+    Ult:= nodo
+Sino
+    p:= Prim
+
+    Mientras (p <> Nill) y (*nodo.Antiguedad < *p.Antiguedad) hacer
+        p:= *p.prox
+    FinMientras
+    
+    Si p = Prim entonces 
+        *q.ant:= Nill
+        *q.prox:= p
+        *p.ant:= q
+        Prim:= q
+    Sino
+        Si p = Nill entonces
+            *q.prox:= Nill
+            *q.ant:= Ult
+            *Ult.prox:= q
+            Ult:= q
+        Sino
+            *q.prox:= p
+            *q.ant:= *p.ant
+            *(*p.ant).prox:= q
+            *p.ant:= q
+        FinSi
+    FInSi
+FinSi
+FinProcedimiento
+
+
+NroPer:= N
+Opcion:= ("S", "N")
+
+PROCESO
+
+ABRIR E/(ArchEmp)
+LEER(ArchEmp, RegEmp)
+
+NroPer:= 0
+
+Prim:= Nill
+Ult:= Nill
+
+Mientras NFDA(ArchEmp) hacer
+
+    Nuevo(q)
+    NroPer:= NroPer + 1 
+    *q.NroPersonal:= NroPer
+    *q.Nombre:= RegEmp.Nombre
+    *q.Asignaciones:= 0
+    *q.Antiguedad:= RegEmp.Asignaciones
+
+    Insertar(q)
+
+    Leer(ArchEmp, RegEmp)
+
+FinMientras
+
+CERRAR(ArchEmp)
+
+Escribir("Desea realizar una asignacion? S/N")
+Leer(Opcion)
+
+Mientras (Opcion = "S") hacer
+
+    q:= Prim
+    *q.Asignaciones:= *q.Asignaciones + 1
+
+    *(*q.prox).ant:= Nill
+    Prim:= *q.prox
+    *q.prox:= Nil
+    *q.ant:= Ult
+    *Ult.prox:= q
+    Ult:= q
+
+    Escribir("Desea realizar otra asignacion? S/N")
+    Leer(Opcion)
+
+FinMientras
+
+q:= prim
+
+Mientras (q <> Nill) hacer
+
+    Escribir("El empleado: ", *q.Nombre," tuvo un total de :" *q.Asignaciones," asignaciones en el dia de la fecha)
+    q:= *q.prox
+
+FinMientras
+    
+FinAccion.

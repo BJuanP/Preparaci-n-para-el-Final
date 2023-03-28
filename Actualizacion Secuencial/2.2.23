@@ -1,0 +1,151 @@
+
+
+Accion Casas Es
+Ambiente
+
+Fecha = REGISTRO
+    AÑO:N(4)
+    MES:1..12
+    DIA:1..31
+FIN REGISTRO
+
+Cliente = REGISTRO
+    IDCasa:N(4)
+    FECHA_ULT_LECTURA:FECHA
+    CANT_LECTURAS:N(4)
+    PROM_LECTURAS:N(10)
+    TIPO_CONSUMIDOR:("A","B","C")
+FIN REGISTRO
+
+Mediciones = REGISTRO
+    IDCasa:N(4)
+    FECHA_MEDICION:FECHA
+    CONSUMO:N(6)
+FIN REGISTRO
+
+
+ArchMae, ArchSal: Archivo de Cliente ordenado por IDCasa
+RegMae, RegSal: Cliente
+
+ArchMov: Archivo de Mediciones ordenado por Mediciones
+RegMov: Mediciones
+
+
+PROCEDIMIENTO LeerMae ES:
+    LEER(ArchMae, RegMae)
+    SI FDA(ArchMae) ENTONCES
+        RegMae.IDCasa:= HV
+    FIN SI
+FIN PROCEDIMIENTO
+
+PROCEDIMIENTO LeerMov ES:
+    LEER(ArchMov, RegMov)
+    SI FDA(MEDICIONES) ENTONCES
+        RegMov.IDCasa:= HV
+    FIN SI
+FIN PROCEDIMIENTO
+
+
+CantLect: N(3)
+AcumCon: N
+Consumidor: AN(1)
+
+
+PROCESO
+
+Abrir E/(ArchMae)
+Abrir E/(ArchMov)
+Abrir /S(ArchSal)
+
+LeerMae
+LeerMov
+
+//PONER TODO A CERO LAS VARIABLES
+
+Mientras (RegMae.IDCasa <> HV) o (RegMov.IDCasa <> HV) Hacer
+
+    Si (RegMae.IDCasa < RegMov.IDCasa) entonces
+
+        RegSal:= RegMae
+        GRABAR(ArchSal, RegMov)
+
+        LeerMae
+    Sino
+        Si (RegMae.IDCasa = RegMov.IDCasa) entonces
+
+            Mientras (RegMae.IDCasa = RegMov.IDCasa) hacer
+
+                Si (RegMov.FECHA_ULT_LECTURA.aa < 2016) y (RegMov.FECHA_ULT_LECTURA.mm < 2) entonces
+
+                    RegSal.FECHA_ULT_LECTURA:= RegMov.FECHA_MEDICION
+                    CantLect:= CantLect + 1
+                    RegSal.CANT_LECTURAS:= RegSal.CANT_LECTURAS + 1
+                    AcumCon:= AcumCon + RegMov.Consumo
+                
+                FinSi
+
+                LeerMov
+            FinMientras
+
+            AcumCon:= AcumCon/CantLect
+            RegSal.PROM_LECTURAS:= AcumCon
+
+            Segun (AcumCon) hacer
+                <20000: Consumidor:= "A"
+                <40000: Consumidor:= "B"
+                >=40000: Consumidor:= "C"
+            FinSegun
+            
+            RegSal.TIPO_CONSUMIDOR:= Consumidor
+            GRABAR(ArchSal, RegSal)
+
+            AcumCon:= 0
+            CantLect:= 0
+
+            LeerMae
+
+        Sino
+
+            RegSal.IDCasa:= RegMov.IDCasa
+            RegSal.FECHA_ULT_LECTURA:= RegMov.FECHA_MEDICION
+            RegSal.CANT_LECTURAS:= 1
+            RegSal.PROM_LECTURAS:= RegMov.CONSUMO
+            AcumCon:= RegMov.CONSUMO
+            CantLect:= 1
+
+            LeerMae
+
+            Mientras (RegSal.IDCasa = RegMov.IDCasa) hacer
+
+                Si (RegMov.FECHA_ULT_LECTURA.aa < 2016) y (RegMov.FECHA_ULT_LECTURA.mm < 2) entonces
+
+                    RegSal.FECHA_ULT_LECTURA:= RegMov.FECHA_MEDICION
+                    CantLect:= CantLect + 1
+                    RegSal.CANT_LECTURAS:= RegSal.CANT_LECTURAS + 1
+                    AcumCon:= AcumCon + RegMov.Consumo
+                
+                FinSi
+
+                LeerMov
+            FinMientras
+
+            AcumCon:= AcumCon/CantLect
+            RegSal.PROM_LECTURAS:= AcumCon
+
+            Segun (AcumCon) hacer
+                <20000: Consumidor:= "A"
+                <40000: Consumidor:= "B"
+                >=40000: Consumidor:= "C"
+            FinSegun
+            
+            RegSal.TIPO_CONSUMIDOR:= Consumidor
+
+            GRABAR(ArchSal, RegSal)
+        
+        FinSi
+    FinSi
+FinMientras
+
+//CERRAR TODO
+
+FinAccion.

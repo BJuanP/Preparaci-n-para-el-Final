@@ -1,0 +1,28 @@
+
+
+Accion Nombres Es
+Ambiente
+
+Arreglo: Arreglo [1..10] de AN(10)
+
+NombreIngresado: AN(10)
+Posicion: entero
+
+PROCESO
+
+Posicion:= 1
+
+Escribir("Ingrese el nombre")
+Leer(NombreIngresado)
+
+Mientras (Posicion < 10) y (NombreIngresado <> Arreglo[Posicion])
+    Posicion:= Posicion + 1
+FinMientras
+
+Si NombreIngresado = Arreglo[Posicion] entonces
+    Escribir("El nombre solicitado se encuentra en la posicion: ", Posicion, "del arreglo")
+Sino
+    Escribir("Error en la busqueda")
+FinSi
+
+FinAccion.

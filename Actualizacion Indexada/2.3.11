@@ -1,0 +1,128 @@
+
+
+Accion Automotores Es
+Ambiente
+
+Puntos = Registro
+    DNI
+    CantPuntos
+    UltCarga
+FinRegistro
+
+Cliente = Registro
+    DNI
+    ApeNom
+    Edad
+    Ciudad
+FinRegistro
+
+Cargas = Registro
+    DNI
+    MedioPago
+    ApeNom
+    Fecha
+    Ciudad
+    Monto
+FinRegistro
+
+ArchPun: Archivo de Puntos indexado por DNI
+ArchCli: Archivo de Cliente indexado por DNI
+ArchCar: Archivo de Cargas indexado por DNI
+RegPun: Puntos
+RegCli: Cliente
+RegCar: Cargas
+
+Resp
+Cliente
+CantidadCar
+MedioPago
+CantCarMayorMil
+CliNuevos
+
+
+PROCESO
+
+ABRIR(ArchPun)
+ABRIR(ArchCli)
+ABRIR(ArchCar)
+
+Escribir("Desea comenzar a operar? S/N")
+Leer(Resp)
+
+Mientras NFDA(ArchCar) hacer
+
+    RegCli.DNI:= RegCar.DNI
+    Leer(ArchCli, RegCli)
+
+    Si EXISTE Entonces
+        
+        Monto:= RegCar.Monto
+
+        Si Monto > 1000 entonces
+            CantCarMayorMil:= CantCarMayorMil + 1
+        FinSi
+
+        Puntos:= 0
+        Mientras Monto > 99 hacer
+            Monto:= Monto - 100
+            Puntos:= Puntos + 10
+        FinMientras
+
+        Segun (RegCar.MedioPago) hacer
+            "Efectivo": Puntos:= Puntos * 1.15
+            "Debito": Puntos:= Puntos * 1.45
+            "Credito": Puntos:= Puntos * 1.50
+        FinSegun
+
+        RegPun.CantPuntos:= Puntos + RegPun.CantPuntos
+        RegPun.UltCarga:= RegCar.Fecha
+        REGRABAR(ArchPun, RegPun)
+
+    Sino
+
+        Escribir("Ingrese su edad")
+        Leer(Edad)
+
+        Reg.Cli.DNI:= RegCar.DNI
+        Reg.Cli.NombreYApe:= RegCar.NombreYApe
+        Reg.Cli.Edad:= Edad
+        Reg.Cli.Ciudad:= RegCar.Ciudad
+        GRABAR(ArchCli, RegCli)
+        CliNuevos:= CliNuevos + 1
+
+
+        Monto:= RegCar.Monto
+
+        Si Monto > 1000 entonces
+            CantCarMayorMil:= CantCarMayorMil + 1
+        FinSi
+
+        Puntos:= 0
+        Mientras Monto > 99 hacer
+            Monto:= Monto - 100
+            Puntos:= Puntos + 10
+        FinMientras
+
+        Segun (RegCar.MedioPago) hacer
+            "Efectivo": Puntos:= Puntos * 1.15
+            "Debito": Puntos:= Puntos * 1.45
+            "Credito": Puntos:= Puntos * 1.50
+        FinSegun
+
+        RegPun.DNI:= RegCar.DNI
+        RegPun.CantPuntos:= Puntos
+        RegPun.UltCarga:= RegCar.Fecha
+        GRABAR(ArchPun, RegPun)
+
+    FinSi
+
+    Leer(ArchCar, RegCar)
+
+FinMientras
+
+Escribir("Clientes nuevos cargados: ", CliNuevos)
+Escribir("Cantidad de cargas mayores a 1000 mangos: ", CantCarMayorMil)
+
+CERRAR(todo)
+
+FinAccion.

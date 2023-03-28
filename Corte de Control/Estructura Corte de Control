@@ -1,0 +1,61 @@
+
+
+Ambiente
+
+ResCorte1    //DEFINIR LOS RESGUARDOS
+ResCorte2
+
+Total1       //DEFINIR LOS TOTALES
+Total2
+
+
+Procedimiento Corte1() Es           //Por cada nivel existente se define un Corte
+
+    Corte2()                        //LLAMO AL CORTE INMEDIATO DE MENOR NIVEL
+
+    Escribir(Total1)                //ESCRIBIR LOS TOTALES
+
+    TotalG:= TotalG + Total1        //CARGAR LOS TOTALES DE MAYOR NIVEL
+
+    Total1:= 0                      //PONER A CERO LOS TOTALES DEL CORTE ACTUAL
+
+    ResCorte1:= Reg.Corte1          //REALIZAR RESGUARDO DE CLAVE
+
+FinProcedimiento
+
+
+Procedimiento Corte2() Es
+    Escribir(Total2)                //ESCRIBIR LOS TOTALES
+    Total1:= Total1 + Total2        //CARGAR LOS TOTALES DE MAYOR NIVEL
+    Total2:= 0                      //PONER A CERO LOS TOTALES DEL CORTE ACTUAL
+    ResCorte2:= Reg.Corte2          //REALIZAR RESGUARDO DE CLAVE
+FinProcedimiento
+
+
+PROCESO
+
+Total1:= 0                  //Pongo los totales a cero
+Total2:= 0
+TotalG:= 0
+ResCorte1:= Reg.Corte1      //realizo el resguardo de claves //serían tantos como niveles tenga mi problema
+ResCorte2:= Reg.Corte2
+                            
+
+Mientras NFDA(Archivo) hacer
+
+    Si Reg.Corte1 <> ResCorte1 entonces
+        Corte1()
+    Sino
+        Si Reg.Corte2 <> ResCorte2 entonces
+            Corte2()
+        FinSi
+    FinSi
+
+    Total2:= Total2 + 1        //PROCESO EL TOTAL DEL CORTE DE MENOR NIVEL
+
+    Leer(Archivo, Reg)
+FinMientras
+
+Corte1()                       //LLamo al corte de mayor nivel
+Escribir(TotalG)               //Muestro el total final
+Cerrar(Archivo)                //Cierro archivo

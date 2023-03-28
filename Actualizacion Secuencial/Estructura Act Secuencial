@@ -1,0 +1,47 @@
+
+
+
+
+AMae
+AMov
+
+Procedimiento LeerMae Es
+    Leer(AMae, RMae)
+    Si FDA(AMae) entonces
+        RMae:= HV
+    FinSi
+FinProcedimiento
+
+Procedimiento LeerMov Es
+    Leer(AMov, RMov)
+    Si FDA(AMov) entonces
+        RMov:= HV
+    FinSi
+FinProcedimiento
+
+Mientras (RMae <> HV) o (RMov <> HV) Hacer
+    Si (RMae.Clave) < (RMov.Clave) entonces                        //No hay movimiento para ese registro
+        RSal:= RMae; GRABAR(AS, RS)
+        LeerMae()
+    Sino
+        Si (RMae.Clave) = (RMov.Clave) entonces                    //Solo puede haber modificacion o baja
+            Segun (CodMov) hacer
+                ="Alta": Escribir(error. El registro ya existe)
+                ="Mod":  ProcesoModificacion(); Grabar a la salida
+                ="Baja": Marcar_Registro(); Grabar a la salida
+            FinSegun
+            LeerMae(); LeerMov()
+        Sino                                                       //Solo puede haber alta
+            Segun (CodMov) hacer
+                ="Alta": ProcesoAlta(); 
+                ="Mod":  Escribir(error. El registro no existe)
+                ="Baja": Escribir(error. El registro no existe)
+            FinSegun
+            LeerMov()
+        FinSi
+    FinSi
+FinMientras
+
+Cerrar(Todos) 
+
+FinAccion.

@@ -1,0 +1,146 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void imprimir();                  //PROCEDIMIENTO
+void imprimir(){
+    printf("Hola nashe\n");
+}
+
+void imprimir2(char caracter);    //PROCEDIMIENTO
+void imprimir2(char caracter){
+    printf("%c\n",caracter);
+}
+
+
+
+int suma();                       //FUNCION
+int suma(){
+    int numero = 1;
+    int numero2 = 1;
+    int resultado = numero + numero2;
+    return resultado;
+}
+
+int suma2(int num1, int num2);    //FUNCION
+int suma2(int num1, int num2){
+    return num1+num2;
+}
+
+
+
+void leerDatos(int *arr, int *n);
+void leerDatos(int *arr, int *n){
+    int i;
+    for (i=0; i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+}
+
+void sumarArreglo(int *arr1, int *arr2, int *arrRes, int n);
+void sumarArreglo(int *arr1, int *arr2, int *arrRes, int n){
+    int i=0;
+    while(i<n){
+        arrRes[i]=arr1[i]+arr2[i];
+        i++;
+    }
+}
+
+
+int main(){
+
+    int n;
+    scanf("%d",&n);
+    int arrA[n], arrB[n], arrRes[n];
+    leerDatos(arrA,n);
+    leerDatos(arrB,n);
+
+    sumarArreglo(arrA, arrB, arrRes, n);
+
+
+    int resultadoDeLaSuma;         //VARIABLE PARA LA FUNCION
+
+    imprimir();                    //LLAMAR A LOS PROCEDIMIENTOS
+    imprimir2("h");
+
+    resultadoDeLaSuma = suma();    //LLAMAR A LA FUNCION
+
+    suma2(5,6);                    //LLAMAR A LA FUNCION
+
+    int Arreglo2Dim[3][5] = {{5,3,2},{3,2,5,7,4}};       //arreglo de 2 dimensiones
+
+    char Arregloc[10];
+    int Arreglo2[5] = {2,3,2,4,5};   //inicializar arreglos y cargar
+
+    int IDCalle, NroDCasa, consumo, cont, acum;
+    char condC;
+    float precio;
+
+    precio = 10;      //asignar valor a las variables
+    condC = "c";
+    cont = 0;
+    acum = 0;
+
+    //Int        %d    Entero con signo
+    //Float      %f    Real con signo
+    //Char       %c    carácter
+    //Char[n]    %s    Cadena de caracteres
+    //Int[n]     %i    cadena de enteros
+
+    printf("%dkWh  $%2.f  %c\n", consumo, precio, condC);                //entero, float, entero
+    printf("Ingrese un consumo mayor a 150kHw para la comparacion: ");   //mostrar mensaje por pantalla
+    scanf("%d", &cont);                                                  //Leer el dato ingresado y cargar en variable
+    printf("\n\n");                                                      //Espacio en blanco
+
+
+    int sizeA;                                  //PEDIR TAMAÑO DEL ARREGLO Y CARGARLO
+    Printf("tamaño del arreglo\n");  
+    scanf("%i", &sizeA);
+    int Arreglo1[sizeA];
+
+    for(int i = 0; i < 10;i++){                 //CARGAR VALORES EN EL ARREGLO
+        printf("Ingrese un valor %i\n", i+1);   
+        scanf("%i", &Arreglo1[i]);
+    } 
+
+
+    if(cont < 200){                       //CONDICIONAL SIMPLE
+        condC='B';
+        precio=cont*10;
+    }
+
+
+    if(cont < 200){                       //CONDICIONAL ALTERNATIVO
+        condC='B';
+        precio=cont*10;
+    }
+    else{
+        condC='M';
+        precio=cont*11;
+    }
+
+    switch(condC){                       //CONDICIONAL SELECCION MULTIPLE
+        case 'a': printf("ROJO");
+            break;
+        case 'e': printf("ROJO");
+            break;
+        case 'i': printf("ROJO");
+            break;
+        default: printf("Error");
+    }
+
+
+    while (acum == 0){                     //MIENTRAS
+        printf("Hola\n");
+    }
+
+
+    for(int i = 0; i < 10;i++){            //PARA
+        printf("%i\n", Arreglo1[i]);           
+    } 
+        
+
+	return 0;      //Esta poronga poner siempre
+}

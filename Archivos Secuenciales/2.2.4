@@ -1,0 +1,60 @@
+
+
+Accion Facultad Es
+Ambiente 
+
+FECHA = Registro
+    dd: N(2)
+    mm: N(2)
+    aa: N(4)
+FinRegistro
+
+FACULTAD = Registro
+    Apellido_Nombre: AN(60)
+    Carrera: (ISI - IEM - IQ)
+    N_Legajo: N(8)
+    Fecha_Nac: FECHA
+    Fecha_Ing: FECHA
+    DNI: N(8)
+    Sexo: (M o F)
+    Fecha_UltExaA: FECHA
+    Nota: N(2)
+FinRegistro
+
+ArchFac: Archivo de FACULTAD
+RegFac: FACULTAD
+
+ArchSal: Archivo de FACULTAD
+RegSal: FACULTAD
+
+CarreraDada: AN(3)
+AñoActual: N(4)
+
+PROCESO
+
+ABRIR e/(ArchFac)
+LEER(ArchFac, RegFac)
+ABRIR /s(ArchSal)
+
+Escribir("Ingrese el año actual")
+Leer(AñoActual)
+
+Escribir("Ingrese las siglas de una carrera")
+Leer(CarreraDada)
+
+Mientras NFDA(ArchFac) hacer
+    Si (RegFac.Carrera = CarreraDada) entonces
+        Si (RegFac.Fecha_UltExaA =< AñoActual) entonces
+            Si (RegFac.nota > 7) entonces
+                RegSal:= RegFac
+                ESCRIBIR(ArchSal, RegSal)
+            FinSi
+        FinSi
+    FinSi
+    LEER(ArchFac, RegFac)
+FinMientras
+
+CERRAR(ArchFac)
+CERRAR(ArchSal)
+
+FinAccion

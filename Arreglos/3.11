@@ -1,0 +1,33 @@
+
+
+Accion Peliculas (Pelis: Arreglo [1..100] de Pelicula) Es
+
+Pelicula = Registro
+    Titulo: AN(60)
+    NombreDirec
+    Categoria
+    CantVistas
+    Alquilado
+FinRegistro
+
+ArchPel: Archivo de Pelicula ordenado por Titulo
+RegPel: Pelicula
+
+Categoria: N
+
+
+PROCESO
+
+
+Escribir("Ingrese la categoría")
+Leer(Peli)
+
+
+
+Para i:= 1 hasta 100, 1 hacer
+    Si (Cat = Pelicula[i].Cat) entonces
+        Escribir(Pelicula[i].Titulo)
+    FinSi
+FinPara
+
+FinAccion

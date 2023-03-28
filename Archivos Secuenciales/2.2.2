@@ -1,0 +1,48 @@
+
+
+Accion factura Es
+Ambiente
+
+FECHA = Registro
+    dd: N(2)
+    mm: N(2)
+    aa: N(4)
+FinRegistro
+
+
+FACTURA = Registro
+    Nro_Factura: N(7)
+    Fecha: FECHA
+    Importe_Total: N(6,2)
+FinRegistro
+
+ArchFac: archivo de FACTURA
+RegFac: FACTURA
+
+fechaEnt: FECHA
+
+PROCESO
+
+ABRIR(ArchFac)
+LEER(ArchFac, RegFac)
+
+Escribir("Ingrese una fecha")
+Leer(fechaEnt.aa, fechaEnt.mm, fechaEnt.aa)
+
+Escribir("Numero de factura / Fecha / Importe Total")
+
+Mientras NFDA(ArchFac) hacer
+
+    Si (RegFac.Fecha > fechaEnt) y (RegFac.Importe_Total < 1000) entonces
+
+        Escribir(RegFac.Nro_Factura, RegFac.Fecha.dd, RegFac.Fecha.mm, RegFac.Fecha.aa, RegFac.Importe_Total)
+    
+    FinSi
+
+    LEER(ArchFac, RegFac)
+
+FinMientras
+
+CERRAR(ArchFac)
+
+FinAccion

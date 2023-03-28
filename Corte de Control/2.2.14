@@ -1,0 +1,78 @@
+
+
+Accion Censo Es
+Ambiente
+
+ClaveC = Registro
+    Radio: N(4,2)
+    Manzana: N(8)
+    NroVivienda: N(8)
+FinRegistro
+
+Censo = Registro
+    Clave: ClaveC
+    CondViv: ("MB", "B", "M")
+    CantHab: N(8)
+FinRegistro
+
+ArchC: Archivo de Censo ordenado por Clave
+RegC: Censo
+
+TotalCiudad, TotalRadio, TotalMan: N(8)
+
+ResMan: N(8)
+ResRad: N(4,2)
+
+Procedimiento CorteManzana Es
+    Escribir("La cantidad de personas que tienen condicion muy buena en esta manzana es de: ", TotalMan)
+    TotalRadio:= TotalRadio + Total Man
+    TotalMan:= 0
+    ResMan:= RegC.Clave.Manzana
+FinProcedimiento
+
+Procedimiento CorteRadio Es
+    CorteManzana
+    Escribir("La cantidad de personas que tienen condicion muy buena en este radio es de: ", TotalRadio)
+    TotalCiudad:= TotalCiudad + TotalRadio
+    TotalRadio:= 0
+    ResRad:= RegC.Clave.Radio
+FinProcedimiento
+
+
+PROCESO
+
+ABRIR E/(ArchC)
+Leer(ArchC, RegC)
+
+TotalCiudad:= 0
+TotalRadio:= 0
+TotalMan:= 0
+
+ResMan:= RegC.Clave.Manzana
+ResRad:= RegC.Clave.Radio
+
+Mientras NFDA(ArchC) hacer
+
+    Si (ResRad <> RegC.Clave.Radio) entonces
+        CorteRadio
+    Sino
+        Si (ResMan <> RegC.Clave.Man) entonces  
+            CorteManzana
+        FinSi
+    FinSi
+
+    Si RegC.CondViv = "MB" entonces
+        TotalMan:= TotalMan + 1
+    FinSi
+
+    Leer(ArchC, RegC)
+
+FinMientras
+
+CorteRadio
+
+Escribir("El total general de personas en la ciudad es de: ", TotalCiudad)
+
+CERRAR(ArchC)
+
+FinAccion.

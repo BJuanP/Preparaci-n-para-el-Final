@@ -1,0 +1,31 @@
+
+Accion producto es
+ambiente
+
+A: entero
+B: entero
+
+aux: entero
+prod: entero
+
+PROCESO
+
+Imprimir("iNGRESE 2 NUMEROS")
+leer(A)
+leer(B)
+
+prod:= 0
+
+Si( A > 0) y (B > 0) entonces
+
+    AUX:= A
+    Mientras AUX > 0 hacer
+        prod:= prod + B
+        AUX:= AUX-1
+    FinMientras
+
+FinSi
+
+Imprimir("El prudcto es: ", prod)
+
+FinAccion

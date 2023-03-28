@@ -1,0 +1,120 @@
+
+
+program Escultores;
+
+TYPE
+    tvector = array[1..5] of integer;  //VECTOR
+
+
+var
+    vector:tvector                     //VECTOR
+
+	enteros: Integer;
+	logicos: boolean;
+	caracteres: char;
+    frases: string;
+
+	procedure Saludar; //PROCEDIMIENTO
+	begin
+		write('Hola');
+	end;
+
+    procedure Saludar(nombre: string); //PROCEDIMIENTO
+	begin
+        writeln(nombre);
+		writeln('Hola');
+	end;
+
+    function suma(n1: integer, n2: integer): integer;     //FUNCION
+    begin
+        suma:= n1+n2
+    end;
+
+    function Busqueda(arr: tvector,n: integer): integer;     //FUNCION
+    var
+        min, i: integer;
+    begin
+        min:= arr[1];
+        for i:= 2 to n do
+        begin
+            if min > arr[i] then
+            begin
+                min:= arr[i]
+            end;
+        end;
+        Busqueda:= min;
+    end;
+
+begin
+
+    vector[1]:= 5                      //VECTOR
+    writeln(vector[1]);
+
+    for i:= 1 to 5 do
+    begin
+        writeln(vector[i]);            //VECTOR
+    end;
+
+
+    ContA:= 0;         //ASIGNACIONES DE VARIABLES
+    Pais:= "p"
+    CarP:= false;
+
+    writeln('Ingrese la edad que este entre 4 y 140 años');   //PEDIR DATOS
+    readln(enteros);
+
+    Pais:=UPCASE(Pais);     //pasar caracter a Mayus.
+    Pais:=LOWCASE(Pais);    //pasar caracter a Minus.
+    frases:= length(frases) //longitud del string
+    imc:= Round(peso);     //redondear
+ 
+
+    if e = 'P' then           //CONDICIONAL SIMPLE
+    begin
+        CarP:= true;
+    end;
+
+    if edad >= 20 then        //CONDICIONAL ALTERNATIVO
+    begin
+        writeln('Hola');
+    end
+    else
+    begin
+        writeln('Chau');
+    end;
+
+    case e of                 //CONDICIONAL SELECCION MULTIPLE
+        'A':
+        ContA:= ContA+1;
+        'C':
+        ContC:= ContC+1;
+        'P':
+        ContP:= ContP+1;
+    end;
+
+    case imc of                              //CONDICIONAL SELECCION MULTIPLE
+        1..18: resultado := 'Bajo Peso';
+        19..24: resultado := 'Normal';
+        25..29: resultado := 'Sobrepeso';
+        else
+        resultado := 'Obeso';
+    end;
+
+
+    while ContA <> 5 do             //MIENTRAS
+    begin
+        writeln('la cantidad de escultores es de: ', ContA);
+        ContA:= ContA+1;
+    end;
+
+
+    for i:= 1 to 4 do               //PARA
+    begin
+        writeln('la cantidad de escultores es de: ', ContA);
+    end;
+
+
+    writeln('Porcentaje: ', TRUNC((ContP*100)/TotalEsc),'%');
+    writeln();
+    writeln('Segun el material y el pais ingresados, la cantidad de escultores que si hablan ingles es de: ', ContU);
+end.

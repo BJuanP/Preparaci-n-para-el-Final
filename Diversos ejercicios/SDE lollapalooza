@@ -1,0 +1,119 @@
+
+
+Accion lollapalooza() Es
+Ambiente
+
+SecVen: secuencia de caracter
+V: caracter
+
+SecSal: secuencia de caracter
+
+DNI: entero
+Sector: caracter
+NroSec: entero 
+Dig: caracter
+
+Funcion Conver(c:caracter):entero Es
+    Segun (c) hacer
+        "0":Conver:= 0
+        "1":Conver:= 1
+        "2":Conver:= 2
+        "3":Conver:= 3
+        "4":Conver:= 4
+        "5":Conver:= 5
+        "6":Conver:= 6
+        "7":Conver:= 7
+        "8":Conver:= 8
+        "9":Conver:= 9
+    FInSegun
+FinFuncion
+
+Funcion ConverC(n:entero):caracter Es
+    Segun (c) hacer
+        0:ConverC:= "0"
+        1:ConverC:= "1"
+        2:ConverC:= "2"
+        3:ConverC:= "3"
+        4:ConverC:= "4"
+        5:ConverC:= "5"
+        6:ConverC:= "6"
+        7:ConverC:= "7"
+        8:ConverC:= "8"
+        9:ConverC:= "9"
+    FinSegun
+FinFuncion
+
+PROCESO
+
+Arr(SecVen)
+Avz(SecVen, V)
+CREAR(SecSal)
+
+ContVIP:= 0
+
+Mientras NFDS(SecVen) hacer
+
+    DNI:= 0
+    Para i:= 1 hasta 8, 1 hacer
+        Num:= Conver(V)
+        DNI:= DNI + Num*(10**(i-1))
+        Avz(SecVen, V)
+    FinPara
+    
+    Sector:= V
+    Avz(SecVen, V)
+    
+    AuxNum:= 0
+    Poten:= 0
+    UltDig:= 0
+
+    Mientras (V <> "*") hacer
+        Num:= Conver(V)
+        AuxNum:= AuxNum + Aux*(10**Poten)
+        Poten:= Poten+1
+        UltDig:= Aux
+        Avz(SecVen, V)
+    FinMientras
+
+    Si (UltDig MOD 2) = 0 entonces
+        ContVIP:= ContVIP+1
+
+        Para i:= 1 hasta 8, 1 hacer
+            Num:= DNI MOD 10
+            DNI:= DNI DIV 10
+            Dig:= ConverC(Num)
+            Escribir(SecSal, Dig)
+        FinPara
+
+        Escribir(SecSal, Sector)
+
+        Mientras (AuxNum <> "0") hacer
+            Num:= AuxNum MOD 10
+            AuxNum:= AuxNum DIV 10
+            Dig:= ConverC(Num)
+            Escribir(SecSal, Dig)
+        FinMientras
+
+        Mientras (V <> "+") hacer
+            Escribir(SecSal, V)
+            Avz(SecVen, V)
+        FinMientras
+        Escribir(SecVen, "+")
+        Avz(SecVen, V)
+    Sino
+        Mientras (V <> "+") hacer
+            Avz(SecVen, V)
+        FinMientras
+        Avz(SecVen, V)
+    FinSi
+
+FinMientras
+CERRAR(SecVen)
+CERRAR(SecSal)
+
+Escribir("El total de butacas VIP es de: ", ContVIP)
+FinAccion.
+
+
+56344523g5435*23+56344523g5435*23+56344523g5435*23+56344523g5435*23+
+

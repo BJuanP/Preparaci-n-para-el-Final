@@ -1,0 +1,49 @@
+
+
+
+Ordenamiento por Selección
+
+PARA I:= 1 HASTA N-1 HACER
+    min:= A[i]
+    x:= i
+    Para j:= i+1 hasta n hacer
+        Si min > A[j] entonces
+            min:= A[j]
+            x:= j
+        FinSi
+    FinPara
+    A[x]:= A[i]
+    A[i]:= Min
+FinPara
+
+
+
+Ordenamiento por Inserción
+
+PARA I:= 2 HASTA N HACER
+    x:= A[i]
+    J:= i-1
+    Mientras (A[j] > x) y (j > 0) hacer
+        A[j+1]:= A[j]
+        j:= j-1
+    FinPara
+    A[j+1]:= x
+FinPara
+
+
+
+
+Ordenamiento por Intercambio(burbuja)
+
+Band:= False
+Mientras no Band hacer
+    Bandera:= True
+    Para i:= 1 hasta n-1 hacer
+        Si A[i] > A[i+1] entonces
+            x:= A[i]
+            A[i]:= A[i+1]
+            A[i+1]:= x
+            Band:= False
+        FinSi
+    FinPara
+FinMientras

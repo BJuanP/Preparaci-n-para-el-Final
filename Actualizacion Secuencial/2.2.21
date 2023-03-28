@@ -1,0 +1,108 @@
+
+
+Accion UTNbook Es
+Ambiente
+
+Fecha = Registro
+    dd: N
+    mm: N
+    aa: N
+FinRegistro
+
+ClaveM = Registro
+    CodUser: N
+    CodAmi: N
+FinRegistro
+
+Amigos = Registro
+    Clave: ClaveM
+    FechaAmi: Fecha
+    MensajeMuro: AN
+FinRegistro
+
+Notificaciones = Registro
+    Clave: ClaveM
+    CodMov: (A, B, M)
+    FechaAmi: Fecha
+    MensajeMuro: AN
+FinRegistro
+
+
+ArchMae, ArchSal: Archivo de Amigos ordenado por Clave
+RegMae, RegSal: Amigos
+
+ArchMov: Archivo de Notificaciones ordenado por Clave y CodMov
+RegMov: Notificaciones
+
+
+Procedimiento LeerMae Es
+    Leer(ArchMae, RegMae)
+    Si FDA(ArchMae) entonces
+        RegMae.Clave:= HV
+    FinSi
+FinProcedimiento
+
+Procedimiento LeerMov Es
+    Leer(ArchMov, RegMov)
+    Si FDA(ArchMov) entonces
+        RegMov.Clave:= HV
+    FinSi
+FinProcedimiento
+
+
+PROCESO
+
+Abrir E/(ArchMae)
+Abrir E/(ArchMov)
+Abrir /S(ArchSal)
+
+Mientras (RegMae.Clave <> HV) o (RegMov.Clave <> HV) Hacer
+
+    Si (RegMae.Clave < RegMov.Clave) entonces
+        RegSal:= RegMae
+        GRABAR(ArchSal, RegMov)
+        LeerMae
+    Sino
+        Si (RegMae.Clave = RegMov.Clave) entonces
+
+            Segun (RegMov.CodMov) hacer
+
+                "A": Escribir("No se puede agregar registro si MAE = MOV")
+
+                "B": Escribir("Se ha eliminado un amigo")
+                     //Con tan solo pasar de largo se realiza la baja fisica
+
+                "M": RegSal:= RegMae
+                     RegSal.MensajeMuro:= RegMov.MensajeMuro
+                     GRABAR(ArchSal, RegSal)
+
+            FinSegun
+
+            LeerMae
+            LeerMov
+
+        Sino
+
+            Segun (RegMov.CodMov) hacer
+
+                "A": RegSal.Clave:= RegMov.Clave
+                     RegSal.FechaAmi:= RegMov.FechaAmi
+                     RegSal.MensajeMuro:= RegMae.MensajeMuro
+                     GRABAR(ArchSal, RegSal)
+
+                "B": Escribir("Error. Baja no permitida")
+
+                "M": Escribir("Error. Modificacion no permitida")
+
+            FinSegun
+
+            LeerMov
+        FinSi
+    FinSi
+FinMientras
+
+Cerrar(ArchMae) 
+Cerrar(ArchMov)
+Cerrar(ArchSal)
+
+FinAccion.

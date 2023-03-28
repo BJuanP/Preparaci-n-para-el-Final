@@ -1,0 +1,32 @@
+
+Accion suma es
+ambiente
+
+num1: entero
+num2: entero
+
+suma: entero
+
+PROCESO
+
+imprimir("Ingrese 2 numeros")
+leer(num1)
+leer(num2)
+
+suma:= num1 + num2
+
+Si 50 >= suma entonces
+    imprimir("es menor o igual a 50")
+Sino
+    Si suma > 50 y 100 >= suma entonces
+        imprimir("es mayor a 50 y menor o igual a 100")
+    Sino
+        Si suma > 100 y 200 >= suma entonces
+            imprimir("es mayor a 100 y menor o igual a 200")
+        Sino
+            imprimir("es mayor a 200")
+        FinSi
+    FinSi
+FinSi
+
+FinAccion

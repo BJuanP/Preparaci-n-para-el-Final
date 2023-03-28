@@ -1,0 +1,61 @@
+
+
+Accion Compra Es
+Ambiente
+
+COMPRAS = Registro
+    NroCliente: N(6)
+    FechaUltComp:
+    Monto:
+FinRegistro
+
+CLIENTES = Registro
+    NroCliente: 
+    ApeyNom: 
+    Domicilio: 
+    Telefono: 
+    DNI: 
+FinRegistro
+
+ArchCli: Archivo de CLIENTES ordenado por NroCliente
+RegCli: CLIENTES
+
+ArchiCom: Archivo de COMPRAS ordenado por NroCliente
+RegCom: COMPRAS
+
+FechaDada: FECHA
+MontoDado: N(6)
+
+PROCESO
+ABRIR e/(ArchCli)
+ABRIR e/(ArchCom)
+LEER(ArchCli, RegCli)
+LEER(ArchCom, RegCli)
+
+ESCRIBIR("Ingrese una fecha en el formato AA/MM/DD")
+LEER(FechaDada.dd, FechaDada.mm, FechaDada.aa)
+
+ESCRIBIR("Ingrese un monto")
+LEER(MontoDado)
+
+ESCRIBIR("|Nombre y Apellidos| Fecha |Monto|")
+
+Mientras NFDA(ArchCom) hacer
+
+    Mientras (RegCom.NroCliente <> RegCli.NroCliente) hacer
+        Leer(ArchCli, RegCli)
+    FinMientras
+
+    Si (RegCom.FechaUltComp > FechaDada) entonces
+        Si (RegCom.monto > MontoDado) entonces
+            Escribir(RegCli.NomyApe, RegCom.FechaUltComp, RegCom.monto)
+        FinSi
+    FinSi
+    
+    LEER(ArchCom, RegCom)
+FinMientras
+
+CERRAR(ArchCom)
+CERRAR(ArchCli)
+
+FinAccion

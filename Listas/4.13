@@ -1,0 +1,62 @@
+
+
+Accion Eliminacion(Prim: puntero a NODO) Es
+
+NODO = Registro
+    Valor: N
+    prox, ant: puntero a NODO
+FinRegistro
+
+Ult, q, p: puntero a NODO
+
+Condicion: Bool
+
+PROCESO
+
+q:= Prim
+Condicion:= True
+
+Mientras (q <> Nill) y Condicion hacer
+    Si (*q.Valor > *(*q.prox).Valor) entonces
+        Escribir("ERROR")
+        Condicion:= False
+    FinSi
+    q:= *q.prox
+FinMientras
+
+Si Condicion entonces
+
+    p:= Prim
+    q:= *p.prox
+
+    Mientras (p <> Nill) hacer
+        Si (*p.Valor = *q.Valor) hacer
+            Si p = Prim entonces
+                p:= *q.prox
+                q:= *p.prox
+                *p.ant:= Nill
+                Prim:= p
+            Sino
+                Si q = Ult entonces 
+                    *(*p.ant).prox:= Nill
+                    Ult:= *p.ant
+                    p:= Nill
+                Sino
+                    *(*p.ant).prox:= *q.prox
+                    *(*q.prox).ant:= *p.ant
+                    p:= *q.prox
+                    q:= *p.prox
+                FinSi
+            FinSi
+        Sino
+            p:= q
+            q:= *q.prox
+        FinSi
+    FinMientras
+    Escribir("EXITO")
+FinSi
+FinAccion
+
+
+
+//Este codigo solo tiene en cuenta que vengan hasta 2 numeros repetidos, no más que eso.

@@ -1,0 +1,44 @@
+
+
+Accion ListaEnteros (Prim: Puntero a NODO) Es
+Ambiente
+
+
+NODO = Registro
+    valor: N(6)
+    prox: puntero a NODO
+FinRegistro
+
+prim2, q, p, ant: puntero a NODO
+
+PROCESO
+
+q:= Prim
+Prim2:= Nill
+ant:= q
+
+Mientras (q <> nill) hacer
+    
+    Si ((*q.valor MOD 10) = 0) entonces
+
+        Si q = Prim entonces
+            Prim:= *prim.prox
+            
+            *q.prox:= Prim2
+            Prim2:= q
+            q:= prim
+        
+        Sino
+            *ant.prox:= *q.prox
+
+            *q.prox:= Prim2
+            Prim2:= q
+            q:= *ant.prox
+        FinSi
+    Sino
+        ant:= q
+        q:= *q.prox
+    FinSi
+
+FinMientras
+FinAccion.  

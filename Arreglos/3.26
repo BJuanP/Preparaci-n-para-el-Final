@@ -1,0 +1,106 @@
+
+
+Accion Electricidad(ArchFact: Archivo de Facturas) Es
+Ambiente
+
+FECHA = Registro
+    dd: N(2)
+    mm: N(2)
+    aa: N(4)
+FinRegistro
+
+Facturas = Registro
+    NroFact: 
+    NroUser:
+    Zona:
+    Fecha: FECHA
+    Consumo:
+FinRegistro 
+
+RegFact: Facturas
+
+Informe = Registro
+    Consumo
+    Importe
+FinRegistro
+
+MatrizS: Arreglo [1..13, 1..5] de Informe
+
+Zona: N(1)
+Mes: N(2)
+Importe: N(6)
+
+Procedimiento Conversor(num: entero) Es
+    Segun (num) hacer
+        1:Escribir("A")
+        2:Escribir("B")
+        2:Escribir("C")
+        2:Escribir("D")
+    FinSegun
+FinProcedimiento
+
+
+PROCESO
+
+ABRIR E/(ArchFact)
+LEER(ArchFact, RegFact)
+
+Para i:= 1 hasta 13, 1 hacer
+    Para j:= 1 hasta 5, 1 hacer
+        MatrizS[i,j].Consumo:= 0
+        MatrizS[i,j].Importe:= 0
+    FinPara
+FinPara
+
+Mientras NFDA(ArchFact) hacer
+
+    Mes:= RegFact.Fecha.mm
+
+    Segun (RegFact.Zona) hacer 
+        "A":Zona:= 1
+            Importe:= (RegFact.Consumo * 0.05)
+        "B":Zona:= 2
+            Importe:= (RegFact.Consumo * 0.07)
+        "C":Zona:= 3
+            Importe:= (RegFact.Consumo * 0.09)
+        "D":Zona:= 4
+            Importe:= (RegFact.Consumo * 0.13)
+    FinSegun
+
+    MatrizS[Mes,Zona].Consumo:= MatrizS[Mes,Zona].Consumo + RegFact.Consumo
+    MatrizS[13,Zona].Consumo:= MatrizS[13,Zona].Consumo + RegFact.Consumo
+    MatrizS[Mes,5].Consumo:= MatrizS[Mes,5].Consumo + RegFact.Consumo
+    MatrizS[13,5].Consumo:= MatrizS[13,5].Consumo + RegFact.Consumo
+
+    MatrizS[Mes,Zona].Importe:= MatrizS[Mes,Zona].Importe + Importe
+    MatrizS[13,Zona].Importe:= MatrizS[13,Zona].Importe + Importe
+    MatrizS[Mes,5].Importe:= MatrizS[Mes,5].Importe + Importe
+    MatrizS[13,5].Importe:= MatrizS[13,5].Importe + Importe
+
+    LEER(ArchFact, RegFact)
+
+FinMientras
+
+CERRAR(ArchFact)
+
+Para i:= 1 hasta 12, 1 hacer
+    Para j:= 1 hasta 4, 1 hacer
+        Escribir("En el mes :", i," del año, el consumo total de la zona: ", Conversor(J)," es de: ", MatrizS[i,j].Consumo)
+        Escribir("En el mes :", i," del año, el importe total de la zona: ", Conversor(J)," es de: ", MatrizS[i,j].Importe)
+    FinPara
+FinPara
+
+Para i:= 1 hasta 12, 1 hacer
+    Escribir("El consumo parcial del mes: ", i," es de:", MatrizS[i,5].Consumo)
+    Escribir("El importe parcial del mes: ", i," es de:", MatrizS[i,5].Importe)
+FinPara
+
+Para i:= 1 hasta 4, 1 hacer
+    Escribir("El consumo parcial de la zona: ", Conversor(i)," es de:", MatrizS[13,i].Consumo)
+    Escribir("El Importe parcial de la zona: ", Conversor(i)," es de:", MatrizS[13,i].Importe)
+FinPara
+
+Escribir("El Consumo anual es de: ", MatrizS[13,5].Consumo)
+Escribir("El Importe anual es de: ", MatrizS[13,5].Importe)
+
+FinAccion.

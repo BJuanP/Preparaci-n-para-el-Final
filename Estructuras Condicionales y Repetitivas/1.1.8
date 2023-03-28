@@ -1,0 +1,52 @@
+
+Accion edad es
+Ambiente
+
+diaN: entero
+mesN: entero
+añoN: entero
+
+diaA: entero
+mesA: entero
+añoA: entero
+
+band: bool
+
+PROCESO
+
+band:= False
+
+Imprimir("Ingrese su dia, mes y año de nacimiento")
+leer(diaN)
+leer(mesN)
+leer(añoN)
+
+Imprimir("Ingrese la fecha actual")
+leer(diaA)
+leer(mesA)
+leer(añoA)
+
+añoR:= añoA - año
+
+Si mesN > mesA entonces
+    añoR:= añoR - 1
+Sino
+    Si mesA = mesN entonces
+        Si diaN > diaA entonces
+            añoR:= añoR - 1
+        Sino
+            Si diaA = diaN entonces
+                band:= True
+            FinSi
+        FinSi
+    FinSi
+FinSi
+
+
+Si band Entonces
+    Imprimir("Usted cumple años hoy")
+Sino
+    Imprimir("Su edad es: ", añoR)
+FinSi
+
+FinAccion

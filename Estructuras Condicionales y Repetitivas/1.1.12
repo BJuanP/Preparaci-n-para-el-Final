@@ -1,0 +1,51 @@
+
+Accion Composicion Es
+Ambiente
+
+num: entero 
+band: bool
+res: entero
+mul: entero
+
+PROCESO 
+
+band:= False
+res:= 0
+acum:= 0
+mul:= 0
+
+Imprimir("Ingrese un numero mayor a 100 y menor a 1000")
+leer(num)
+
+Si (num > 100) y (1000 > num) entonces 
+    band:= True
+Sino
+    Imprimir("aEl numero está fuera del rango")
+FinSi
+
+Si band entonces 
+
+    Imprimir("A continuacion se mostrara la unidad, decena y centena del numero, en el respectivo orden")
+
+    Para i:= 0 hasta 2, 1 hacer 
+
+        res:= num mod 10  9
+        num:= num div 10  0
+
+        mul:= mul + res   18
+
+        acum:= 10**i      100
+        res:= res*acum    900   
+
+        Imprimir(res)
+
+    FinPara
+FinSi
+
+Si (mul mod 3) = 0 entonces
+    Imprimir("El numero sí es multiplo de 3")
+Sino
+    Imprimir("El numero no es multiplo de 3")
+FinSi 
+
+FinAccion

@@ -1,0 +1,162 @@
+
+
+Accion VideoJuego(Prim1: puntero a NODO1) Es
+Ambiente 
+
+NODO1 = Registro
+	Disp: N(3)
+	prox: puntero a NODO1
+FinReg
+
+NODO2 = Registro
+	Valor: N(8)
+	prox: puntero a NODO2
+FinReg
+
+Prim, q, p, ant: puntero a NODO1
+p1: puntero a NODO1
+Prim2, q2, p2: puntero a NODO2
+
+OpMain: {"S", "N"}
+Vidas: N(1)
+Misio: N(2)
+NroHerr: N(2)
+Puntaje: N(8)
+Unidades: N(8)
+Exito: AN(1)
+SinHerr: N(2)
+Error: N(1)
+
+Procedimiento Insertar(Prim, q: puntero a NODO2) Es
+Ambiente
+p, ant: puntero a NODO2
+PROCESO
+
+Si Prim = Nill entonces
+	*q.prox:= Nill
+	Prim:= q
+Sino
+	p:= Prim
+	
+	Mientras (p <> Nill) y (*p.Valor > *q.Valor)
+		ant:= p
+		p:= *p.prox
+	FinMientras
+
+	Si p = Prim entonces
+		*q.prox:= p
+		Prim:= q
+	Sino
+		Si p = Nill entonces
+			*ant.prox:= q
+			*q.prox:= Nill
+		Sino
+			*ant.prox:= q
+			*q.prox:= p
+		FinSi
+	FinSi
+FinSi
+FinProcedimiento
+
+
+Procedimiento Cargar() Es
+	p1:= Prim1
+	Prim:= Nill
+	Mientras (p1 <> Nill) hacer
+
+		Nuevo(q)
+		*q.Disp:= *p1.Disp
+
+		Si Prim = Nill entonces
+			*q.prox:= Nill
+			Prim:= q
+		Sino
+			p:= Prim
+			Mientras (p <> Nill) hacer
+				ant:= p
+				p:= *p.prox
+			FinMientras
+
+			*ant.prox:= q
+			*q.prox:= Nill
+		FinSi
+		
+		p1:= *p1.prox
+	FinMientras
+FinProcedimiento
+
+
+PROCESO
+
+OpMain:= "S"
+Prim2:= Nill
+
+Mientras OpMain = "S" hacer
+
+	Vidas:= 3
+	Misio:= 0
+	Unidades:= 0
+	SinHerr:= 0
+	Error:= 0
+	Cargar()
+
+	Mientras (Vidas <> 0) y (Misio <> 30) hacer         
+
+		Si (SinHerr = 25) entonces
+			Vidas:= 0
+		Sino
+			NroHerr:= GetTool()
+			p:= Prim
+			Para i:= 1 hasta NroHerr, 1 hacer
+				p:= *p.prox
+			FinPara
+
+			Si (*p.Disp > 0) entonces
+
+				Exito:= Exito()
+
+				Si Exito = "+" entonces
+					Misio:= Misio + 1
+					*p.Disp:= *p.Disp-1
+					Unidades:= Unidades+1
+					Error:= 0
+				Sino
+					Exito = "-" entonces
+						*p.Disp:= *p.Disp-1
+						Unidades:= Unidades+1
+						Error:= Error+1
+					FinSi
+				FinSi
+			Sino
+				Vidas:= Vidas-1
+				SinHerr:= SinHerr+1
+				Error:= Error+1
+			FinSi
+		FinSi
+		
+		Si (Error = 3) entonces
+			Vidas:= Vidas-1
+		FinSi
+
+	FinMientras
+
+	Puntaje:= (10*Misio*Vidas)-Unidades
+
+	Nuevo(q2)
+	*q2.Valor:= Puntaje
+
+	Insertar(Prim2, q2)
+	
+	Escribir("Desea volver a jugar? S/N")
+	Leer(OpMain)
+
+FinMientras
+
+p2:= Prim2					 				//Mostrar ranking
+Escribir("El ranking es el siguiente: ")
+Mientras (p2 <> Nill) hacer
+	(*p2.valor)
+	p2:= *p2.prox
+FinMientras
+
+FinAccion.

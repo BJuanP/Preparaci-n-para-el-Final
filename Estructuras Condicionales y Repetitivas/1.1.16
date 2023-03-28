@@ -1,0 +1,22 @@
+
+Accion alumnos Es
+Ambiente
+
+ISI: entero
+IQ: entero
+IEM: entero
+
+totalA: entero
+
+PROCESO
+
+Imprimir("Ingrese la cantidad de alumnos de ISI, IQ e IEM")
+leer(ISI IQ IEM)
+
+totalA:= ISI+IQ+IEM
+
+Imprimir("El porcentaje de alumnos de ISI es de: ", (ISI*100)/totalA)
+Imprimir("El porcentaje de alumnos de IQ es de: ", (IQ*100)/totalA)
+Imprimir("El porcentaje de alumnos de IEM es de: ", (IEM*100)/totalA)
+
+FinAccion

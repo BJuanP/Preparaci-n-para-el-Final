@@ -1,0 +1,86 @@
+
+
+Accion Peaje Es
+Ambiente
+
+Peaje = Registro
+    Patente:
+    Fecha:
+    UltHora
+    Costo
+FinRegistro
+
+ArchPeaje: Archivo de Peaje indexado por Peaje
+RegPeaje: Peaje
+
+Cat: 1..4
+Pat: AN(6)
+FechaAct: Fecha
+Resp: AN(1)
+
+Procedimiento Importe(Categoria) Es
+
+    Segun (Categoria) hacer
+        1: Importe:= 1.20
+        2: Importe:= 2.50
+        3: Importe:= 4.00
+        4: Importe:= 5.00
+    FinSegun
+FinProcedimiento
+
+
+PROCESO
+
+ABRIR E/S(ArchPeaje)
+
+Repetir
+
+    Escribir("Ingrese su categoría")
+    Leer(Cat)
+
+    Escribir("Ingrese su patente")
+    Leer(Pat)
+
+    RegPeaje.Patente:= Pat
+    Leer(ArchPeaje, RegPeaje)
+
+    Si EXISTE entonces
+
+        FechaAct:= FechaActual()
+
+        Si RegPeaje.Fecha = FechaAct entonces
+
+            Escribir("Usted ya pasó anteriormente")
+            RegPeaje.UltHora:= HoraActual()
+            REGRABAR(ArchPeaje, RegPeaje)
+
+        Sino
+            Escribir("El importe a pagar es: ", Importe(Cat))
+
+            RegPeaje.Patente:= Pat
+            RegPeaje.Fecha:= FechaAct()
+            RegPeaje.UltHora:= HoraActual()
+            RegPeaje.Costo:= Importe(Cat)
+            REGRABAR(ArchPeaje, RegPeaje)
+        FinSi
+
+    Sino
+
+        Escribir("El importe a pagar es: ", Importe(Cat))
+
+        RegPeaje.Patente:= Pat
+        RegPeaje.Fecha:= FechaAct()
+        RegPeaje.UltHora:= HoraActual()
+        RegPeaje.Costo:= Importe(Cat)
+        REGRABAR(ArchPeaje, RegPeaje)
+
+    FinSi
+
+    Escribir("Desea ingresar otra patente? S/N")
+    Leer(Resp)
+
+Hasta que Resp = "N" hacer
+
+CERRAR(ArchPeaje)
+
+FinAccion.

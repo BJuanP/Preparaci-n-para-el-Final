@@ -1,0 +1,21 @@
+
+
+Accion PMatriz(Matriz: Arreglo [1..5, 1..5] de entero) Es
+Ambiente
+
+MayorElemento: N(1)
+
+PROCESO
+
+MayorElemento:= LowValue
+
+Para i:= 1 hasta 5, 1 hacer
+    Para j:= 1 hasta 5, 1 hacer
+        Si Matriz[i,j] > MayorElemento entonces
+            MayorElemento:= Matriz[i,j]
+        FinSi
+    FinPara
+    Escribir("El mayor elemento de la fila: ", i, "es: ", MayorElemento)
+FinPara
+
+FinAccion.

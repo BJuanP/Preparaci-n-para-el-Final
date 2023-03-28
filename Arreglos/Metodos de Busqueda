@@ -1,0 +1,58 @@
+
+
+Busqueda Lineal Pura
+
+Encontrado:= False
+X:= leer(valor)
+
+Para i:= 1 hasta N, 1 hacer
+    Si Arr[i] = X entonces
+        TRATAR_ENCONTRADO
+    FinSi
+FinPara
+
+Si no Encontrado entonces
+    TRATAR_FRACASO
+FinSi
+
+
+
+Busqueda Lineal con Centinela
+
+Pos:= 1
+X:= leer(valor)
+
+Mientras (Pos < N) y (Arr[Pos] <> X)
+    Pos:= Pos+1
+FinPara
+
+Si Arr[Pos] = X entonces
+    TRATAR_EXITO
+sINO
+    TRATAR_FRACASO
+FinSi
+
+
+
+
+Busqueda Binaria o Dicotómica
+
+Inf:= 1
+Sup:= n
+Med:= (Inf+Sup) DIV 2
+x:= (valor buscado)
+
+Mientras (Arr[Med] <> x) y (Inf < Sup) hacer
+    Si (Arr[Med] > x) hacer
+        Sup:= Med-1
+    Sino
+        Inf:= Med+1
+    FinSi
+    Med:= (Inf+Sup) DIV 2
+FinMientras
+
+Si Arr[Med] = x entonces
+    TRATAR_EXITO
+sINO
+    TRATAR_FRACASO
+FinSi

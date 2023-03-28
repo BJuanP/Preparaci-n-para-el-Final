@@ -1,0 +1,333 @@
+
+
+Accion PreViaje(ProvNom: [1..23] de Nombre) Es
+Ambiente
+
+Viajes = Registro
+    IDViaje: N(8)
+    Prov: (1..23)
+    CantDias: N(2)
+    CantPer: N(2)
+    Comp: N(3)
+    Deuda: N(6.2)
+    Credito: N(6.2)
+FinRegistro
+
+ArchVia: Archivo de Viajes
+RegVia: Viajes
+
+Nombre: AN(30)
+
+Salida = Registro
+    CantViajes: N(8)
+    CantPer: N(2)
+    Deuda: N(6.2)
+    Credito: N(6.2)
+FinRegistro
+
+ArrSal: Arreglo [1..23, 1..3] de Salida
+
+NumP: N(3)
+Duracion:= N(1)
+
+MaxPer: N
+MinPer: N
+Suma: N(6)
+MaxProv: AN(30)
+MinProv: AN(30)
+
+ContViajes: 0
+ContProvDiez: 0
+
+PROCESO
+
+ABRIR E/(ArchVia)
+Leer(ArchVia, RegVia)
+
+Para i:= 1 hasta 23, 1 hacer        //PONEMOS LA MATRIZ A CERO
+    Para j:= 1 hasta 3, 1 hacer
+        ArrSal[i,j].CantViajes:= 0
+        ArrSal[i,j].CantPer:= 0
+        ArrSal[i,j].Deuda:= 0.0
+        ArrSal[i,j].Credito:= 0.0
+    FinPara
+FinPara
+
+
+Mientras NFDA(ArchVia) hacer        //CARGAMOS TODA LA INFORMACION EN LA MATRIZ
+
+    Segun (RegVia.CantDias) hacer
+        <4: Duracion:= 1
+        <10: Duracion:= 2
+        >=10: Duracion:= 3
+    FinSegun
+
+    NumP:= RegVia.Prov
+    ArrSal[NumP, Duracion].CantViajes:= ArrSal[NumP].CantViajes + 1
+    ArrSal[NumP, Duracion].CantPer:= ArrSal[NumP].CantPer + RegVia.CantPer
+    ArrSal[NumP, Duracion].Deuda:= ArrSal[NumP, Duracion].Deuda + RegVia.Deuda
+    ArrSal[NumP, Duracion].Credito:= ArrSal[NumP, Duracion].Credito + RegVia.Credito
+
+    Leer(ArchVia, RegVia)
+FinMientras
+
+
+MaxPer:= LV
+MinPer:= HV
+Suma:= 0
+
+Para i:= 1 hasta 23, 1 hacer                    //INFORMAR PROVINCIA QUE RECIBE MAS Y MENOS PERSONAS
+    Para j:= 1 hasta 3, 1 hacer
+        Suma:= Suma + ArrSal[i,j].CantPer
+    FinPara
+
+    Si (MaxPer > Suma) entonces
+        MaxProv:= i
+        MaxPer:= Suma
+    FinSi
+    Si (MinPer < Suma) entonces
+        MinProv:= i
+        MinPer:= Suma
+    FinSi
+FinPara
+Escribir("La provincia en la que se recibirán más personas es: ", MaxProv)
+Escribir("La provincia en la que se recibirán menos personas es: ", MinProv)
+
+
+ContViajes:= 0
+ContProvDiez:= 0
+Para i:= 1 hasta 23, 1 hacer                    //INFORMAR PORCENTAJE DE VIAJES PROV 10
+    Para j:= 1 hasta 3, 1 hacer
+        ContViajes:= ContViajes + ArrSal[i,j].CantViajes
+        Si (i = 10) entonces
+            ContProvDiez:= ContProvDiez + ArrSal[i,j].CantViajes
+        FinSi
+    FinPara
+FinPara
+Escribir("El porcentaje de de viajes que ocurren en la provincia 10 es de: ", (ContProvDiez*100)/200)
+
+
+SumCredA:= 0
+SumCredB:= 0
+SumCredC:= 0
+Para i:= 1 hasta 23, 1 hacer                    //INFORMAR CREDITO POR TIPO DE DURACION
+    Para j:= 1 hasta 3, 1 hacer
+        Segun (j) hacer
+            1:SumCredA:= SumCredA + ArrSal[i,j].Credito
+            2:SumCredB:= SumCredB + ArrSal[i,j].Credito
+            3:SumCredC:= SumCredC + ArrSal[i,j].Credito
+        FinSegun
+    FinPara
+FinPara
+Escribir("El promedio de credito del tipo 1 es de: ", SumCredA/23)
+Escribir("El promedio de credito del tipo 2 es de: ", SumCredB/23)
+Escribir("El promedio de credito del tipo 3 es de: ", SumCredC/23)
+
+
+ProvMax:= 0
+TipoDur
+Mayor:= LV
+
+Para i:= 1 hasta 23, 1 hacer                    //PROVINCIA QUE REGISTRA MÁS VIAJES DISCRIMINADO POR TIPO DE DURACION
+    Para j:= 1 hasta 3, 1 hacer
+        Si (ArrSal[i,j].CantViajes > Mayor) entonces
+            Mayor:= ArrSal[i,j].CantViajes
+            ProMax:= ProvNom[i]
+            TipoDur:= j
+        FinSi
+    FinPara
+FinPara
+Escribir("La provincia que registra más viajes es: ", ProMax, "y el tipo de duración es: ", TipoDur)
+
+
+Suma:= 0                                       //PROVINCIA QUE NO RECIBE VIAJES
+Para i:= 1 hasta 23, 1 hacer
+    Para j:= 1 hasta 3, 1 hacer
+        Suma:= Suma + ArrSal[i,j].CantViajes
+    FinPara
+    Si (Suma = 0) entonces
+        Escribir("La provincia: ", ProvNom[i], "no recibe ningun viaje")
+    FinSi
+FinPara
+
+
+Credito:= 0
+Deuda:= 0
+Para i:= 1 hasta 23, 1 hacer                   //TOTAL DE CREDITO Y DE DEUDA
+    Para j:= 1 hasta 3, 1 hacer
+        Credito:= Credito + ArrSal[i,j].Credito
+        Deuda:= Deuda + ArrSal[i,j].Deuda
+    FinPara
+FinPara
+Escribir("El total de Credito es de: ", Credito)
+Escribir("El total de Deuda es de: ", Deuda)
+
+
+Viajes:= 0
+Personas:= 0
+Para i:= 1 hasta 23, 1 hacer
+    Para j:= 1 hasta 3, 1 hacer
+        Viajes:= Viajes + ArrSal[i,j].CantViajes
+        Personas:= Personas + ArrSal[i,j].CantPer
+    FinPara
+FinPara
+
+FinAccion.
+
+
+
+// OTRA FORMA DE HACER. HACE TODO EN UN SOLO CICLO PARA (NO HAY AHORRO MUCHO MAYOR EN LINEAS DE CODIGO)
+
+
+
+Accion PreViaje(ProvNom: [1..23] de Nombre) Es
+Ambiente
+
+Viajes = Registro
+    IDViaje: N(8)
+    Prov: (1..23)
+    CantDias: N(2)
+    CantPer: N(2)
+    Comp: N(3)
+    Deuda: N(6.2)
+    Credito: N(6.2)
+FinRegistro
+
+ArchVia: Archivo de Viajes
+RegVia: Viajes
+
+Nombre: AN(30)
+
+Salida = Registro
+    CantViajes: N(8)
+    CantPer: N(2)
+    Deuda: N(6.2)
+    Credito: N(6.2)
+FinRegistro
+
+ArrSal: Arreglo [1..23, 1..3] de Salida
+
+NumP, MinPer, MaxPer, MinPer, ContViajes, ContProvDiez, SumCredA, SumCredB, SumCredC, Suma: N
+ProvMax, TipoDur, Mayor, Credito, Deuda, Viajes, Personas: N
+
+PROCESO
+
+ABRIR E/(ArchVia)
+Leer(ArchVia, RegVia)
+
+Para i:= 1 hasta 23, 1 hacer        //PONEMOS LA MATRIZ A CERO
+    Para j:= 1 hasta 3, 1 hacer
+        ArrSal[i,j].CantViajes:= 0
+        ArrSal[i,j].CantPer:= 0
+        ArrSal[i,j].Deuda:= 0.0
+        ArrSal[i,j].Credito:= 0.0
+    FinPara
+FinPara
+
+
+Mientras NFDA(ArchVia) hacer        //CARGAMOS TODA LA INFORMACION EN LA MATRIZ
+
+    Segun (RegVia.CantDias) hacer
+        <4: Duracion:= 1
+        <10: Duracion:= 2
+        >=10: Duracion:= 3
+    FinSegun
+
+    NumP:= RegVia.Prov
+    ArrSal[NumP, Duracion].CantViajes:= ArrSal[NumP].CantViajes + 1
+    ArrSal[NumP, Duracion].CantPer:= ArrSal[NumP].CantPer + RegVia.CantPer
+    ArrSal[NumP, Duracion].Deuda:= ArrSal[NumP, Duracion].Deuda + RegVia.Deuda
+    ArrSal[NumP, Duracion].Credito:= ArrSal[NumP, Duracion].Credito + RegVia.Credito
+
+    Leer(ArchVia, RegVia)
+FinMientras
+
+
+MaxPer:= LV
+MinPer:= HV
+Suma:= 0
+
+ContViajes:= 0
+ContProvDiez:= 0
+
+SumCredA:= 0
+SumCredB:= 0
+SumCredC:= 0
+
+ProvMax:= 0
+Mayor:= LV
+
+Suma:= 0
+
+Credito:= 0
+Deuda:= 0
+
+Viajes:= 0
+Personas:= 0
+
+Para i:= 1 hasta 23, 1 hacer                    
+    Para j:= 1 hasta 3, 1 hacer
+
+        Suma:= Suma + ArrSal[i,j].CantPer                       //INFORMAR PROVINCIA QUE RECIBE MAS Y MENOS PERSONAS
+
+        ContViajes:= ContViajes + ArrSal[i,j].CantViajes        //INFORMAR PORCENTAJE DE VIAJES PROV 10
+        Si (i = 10) entonces
+            ContProvDiez:= ContProvDiez + ArrSal[i,j].CantViajes
+        FinSi
+
+        Segun (j) hacer
+            1:SumCredA:= SumCredA + ArrSal[i,j].Credito         //INFORMAR CREDITO POR TIPO DE DURACION
+            2:SumCredB:= SumCredB + ArrSal[i,j].Credito
+            3:SumCredC:= SumCredC + ArrSal[i,j].Credito
+        FinSegun
+
+        Si (ArrSal[i,j].CantViajes > Mayor) entonces            //PROVINCIA QUE REGISTRA MÁS VIAJES DISCRIMINADO POR TIPO DE DURACION
+            Mayor:= ArrSal[i,j].CantViajes
+            ProMax:= ProvNom[i]
+            TipoDur:= j
+        FinSi
+
+        Suma:= Suma + ArrSal[i,j].CantViajes                    //PROVINCIA QUE NO RECIBE VIAJES
+
+        Credito:= Credito + ArrSal[i,j].credito                 //TOTAL DE CREDITO Y DE DEUDA
+        Deuda:= Deuda + ArrSal[i,j].Deuda
+
+        Viajes:= Viajes + ArrSal[i,j].CantViajes                //TOTAL DE VIAJES Y PERSONAS
+        Personas:= Personas + ArrSal[i,j].CantPer
+
+    FinPara
+
+    Si (MaxPer > Suma) entonces
+        MaxProv:= i
+        MaxPer:= Suma
+    FinSi
+    Si (MinPer < Suma) entonces
+        MinProv:= i
+        MinPer:= Suma
+    FinSi
+
+    Si (Suma = 0) entonces
+        Escribir("La provincia: ", ProvNom[i], "no recibe ningun viaje")
+    FinSi
+    Suma:= 0
+
+FinPara
+
+Escribir("La provincia en la que se recibirán más personas es: ", MaxProv)
+Escribir("La provincia en la que se recibirán menos personas es: ", MinProv)
+
+Escribir("El porcentaje de de viajes que ocurren en la provincia 10 es de: ", (ContProvDiez*100)/200)
+
+Escribir("El promedio de credito del tipo 1 es de: ", SumCredA/23)
+Escribir("El promedio de credito del tipo 2 es de: ", SumCredB/23)
+Escribir("El promedio de credito del tipo 3 es de: ", SumCredC/23)
+
+Escribir("La provincia que registra más viajes es: ", ProMax, "y el tipo de duración es: ", TipoDur)
+
+Escribir("El total de Credito es de: ", Credito)
+Escribir("El total de Deuda es de: ", Deuda)
+
+Escribir("El total de Viajes es de: ", Viajes)
+Escribir("El total de Personas es de: ", Personas)
+
+FinAccion.

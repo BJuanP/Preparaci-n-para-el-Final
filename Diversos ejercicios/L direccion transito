@@ -1,0 +1,245 @@
+
+
+Accion Transito Es
+Ambiente
+
+Multas = Registro
+    NumIden: N(6)
+    Pat: AN(7)
+    Tipo: (1..24)
+    Importe: N(5.2)
+FinRegistro
+
+ArchMul:= Archivo de Multas ORDENADO por NumIden
+RegMul:= Multas
+
+NODO = Registro
+    dato: Multas
+    prox: puntero a NODO
+FinRegistro
+
+Prim1, q1, p, ant: puntero a NODO
+Prim2, q2: puntero a NODO
+
+ArchEspecial = Registro
+    Cant: N
+    Tipo: (1..24)
+FinRegistro
+
+NODO2 = Registro
+    dato: ArchEspecial
+    prox: puntero a NODO2
+FinRegistro
+
+Prim3, q3: puntero a NODO2
+
+OpMain: {"S", "N"}
+OpMenu: {"C", "A", "B", "M"}
+OpBusq: {"A","V"}
+Band: Bool
+
+Prom: N(8)
+AuxProm: N(6)
+NumIdenIng: N(6)
+PatIng: AN(7)
+Total: N(5.2)
+ContMul: N
+ImporteTotal: N
+Min: N
+PromMin: N
+MinTipo: (1..24)
+
+
+Procedimiento INSERTAR(Prim, q: puntero a NODO) Es
+Ambiente
+    pp, antp: puntero a NODO
+PROCESO
+
+    Si Prim = Nill entonces
+        *q.prox:= Nill
+        Prim:= q
+    Sino
+        pp:= Prim
+
+        Mientras (pp <> Nill) y (*q.dato.NumIden < *pp.dato.NumIden) hacer
+            antp:= pp
+            pp:= *pp.prox
+        FinMientras
+
+        Si pp = Prim entonces
+            *q.prox:= pp
+            Prim:= q
+        Sino
+            Si pp = Nill entonces
+                *q.prox:= Nill
+                *antp.prox:= q
+            Sino
+                *q.prox:= pp
+                *antp.prox:= q
+            FinSi
+        FinSi
+    FinSi
+FinProcedimiento
+
+
+PROCESO
+
+ABRIR E/(ArchMul)
+Leer(ArchMul, RegMul)
+
+OpMain:= "S"
+Prim1:= Nill
+Prim2:= Nill
+Prim3:= Nill
+
+Mientras (OpMain = "S") hacer
+
+    Escribir("Qué accion desea realizar? Carga, Almacenamiento, Busqueda o Muestra (C/A/B/M)")
+    Leer(OpMenu)
+
+    Segun (OpMenu) hacer
+
+        "C":
+            Mientras NFDA(ArchMul) hacer
+
+                Nuevo(q1)
+                *q1.dato.NumIden:= RegMul.NumIden
+                *q1.dato.Pat:= RegMul.Pat
+                *q1.dato.Tipo:= RegMul.Tipo
+                *q1.dato.Importe:= RegMul.Importe
+
+                INSERTAR(Prim1, q1)
+
+                Leer(ArchMul, RegMul)
+            FinMientras
+
+            Prom:= 0
+            AuxProm:= 0
+
+            p:= Prim
+            Mientras (p <> Nill) hacer
+                Prom:= Prom + *p.dato.Importe
+                AuxProm:= AuxProm + 1
+                p:= *p.prox
+            FinMientras
+            Prom:= Prom/AuxProm
+
+            p:= Prim
+            Mientras (p <> Nill) hacer
+                Si (*p.dato.Importe > Prom) entonces
+
+                    Nuevo(q2)
+                    *q2.dato.NumIden:= *p.dato.NumIden
+                    *q2.dato.Pat:= *p.dato.Pat
+                    *q2.dato.Tipo:= *p.dato.Tipo
+                    *q2.dato.Importe:= *p.dato.Importe
+
+                    INSERTAR(Prim2, q2)
+
+                FinSi
+                p:= *p.prox
+            FinMientras
+            Cerrar(ArchSal)
+
+        "B":
+            Escribir("Desea aumentar el importe de una multa o ver si existe una? (A/V)")
+            Leer(OpBusq)
+            Band:= True
+            
+            Segun (OpBusq) hacer
+
+                "A":
+                    Escribir("Ingrese el numero de identificacion: ")
+                    Leer(NumIdenIng)
+
+                    p:= Prim
+                    Mientras (p <> Nill) y Band hacer
+                        Si (*p.dato.NumIden = NumIdenIng) entonces
+                            *p.dato.Importe:=  *p.dato.Importe*1.10
+                            Band:= False
+                        FinSi
+                        p:= *p.prox
+                    FinSi
+
+                    Si no Band entonces
+                        Escribir("Multa no encontrada")
+                    FinSi
+
+                "V":
+                    Escribir("Ingrese el numero de patente: ")
+                    Leer(PatIng)
+                    Total:= 0
+
+                    p:= Prim
+                    Mientras (p <> Nill) hacer
+                        Si (*p.dato.Pat = PatIng) entonces
+                            Band:= False
+                            Total:= Total + *p.dato.Importe
+                            Escribir("Multa a pagar de tipo: ", *p.dato.Tipo, "con un importe de: ", *p.dato.Importe)                    
+                    FinMientras
+
+                    Si Band entonces
+                        Escribir("No hay multas para pagar")
+                    Sino
+                        Escribir("El importe total a pagar es de: ", Total)
+                    FinSi
+            FinSegun
+
+        "M":
+            ContMul:= 0
+            ImporteTotal:= 0
+            p:= Prim
+            Min:= HV
+
+            Para i:= 1 hasta 24, 1 hacer
+                Escribir("Informacion sobre multas de tipo: ", i)
+                Mientras (p <> Nill) hacer
+                    Si (*p.dato.Tipo = i) entonces
+                        ContMul:= ContMul + 1
+                        ImporteTotal:= ImporteTotal + *p.dato.Importe
+                    FinSi
+                    p:= *p.prox
+                FinMientras
+
+                Si (ContMul < Min) entonces
+                    Min:= ContMul
+                    MinTipo:= i
+                    PromMin:= ImporteTotal/ContMul
+                FinSi
+
+                Escribir("El importe total de las multas es de: ", ImporteTotal)
+            FinPara
+            Escribir("El tipo de multa menos registrado es el: ", MinTipo)
+            Escribir("El promedio a pagar es de: ", PromMin)
+
+            
+            Para i:= 1 hasta 24, 1 hacer
+
+                Nuevo(q3)
+                *q3.Cant:= 0
+                *q1.Tipo:= i
+                p:= Prim1
+
+                Mientras (p <> Nill) hacer
+                    Si (*p.dato.tipo = i) entonces
+                        *q3.Cant:= *q3.Cant + 1
+                    FinSi
+                    p:= *p.prox
+                FinMientras
+
+                INSERTAR(Prim3, q3)
+            FinPara
+
+            Escribir("El ranking top 3 de multas más habituales es: ")
+            Para i:= 1 hasta 24, 1 hacer
+                Si i > 21 entonces
+                    Escribir(*p.dato.Tipo)
+                FinSi
+                p:=*p.prox
+            FinPara
+    FinSegun
+
+    Escribir("Desea seguir realizando operaciones?: ")
+    Leer(OpMain)
+FinMientras
+FinAccion.

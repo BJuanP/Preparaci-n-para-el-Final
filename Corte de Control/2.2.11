@@ -1,0 +1,181 @@
+Accion UTN Es
+Ambiente
+
+Fecha = Registro
+    dd: N(2)
+    mm: N(2)
+    aa: N(4)
+FinRegistro
+
+ClaveA = Registro
+    Sexo: ("M","F")
+    Carrera: ("ISI","IQ","IEM","LAR")
+    Nro_Legajo: N(6)
+FinReg
+
+Alumnos = Registro
+    Clave: ClaveA
+    Fecha_Ing: Fecha
+    Tot_Mat_Apro: N(4)
+FinRegistro
+
+ArchA: archivo de Alumnos ordenado por Clave
+RegA: Alumnos 
+
+CarMas, CarMen, SexoMas, SexoMen, TotGMas, TotGMen: N(8)
+
+ResClave: ClaveA
+
+Subaccion Corte_Sexo Es
+
+    Corte_Carrera
+
+    Escribir("Sexo: ", RegClave.Sexo)
+    Escribir("Total del 2009 > 20 del sexo: ", SexoMas)
+    Escribir("Total del 2009 < 20 del sexo: ", SexoMas)
+
+    TotGMas:= TotGMas + SexoMas
+    TotGMen:= TotGMen + SexoMen
+
+    SexoMas:= 0
+    SexoMen:= 0
+
+    ResClave.Sexo:= RegA.Clave.Sexo
+
+FinSubaccion
+
+Subaccion Corte_Carrera Es
+
+    Escribir("Carrera: ", RegClave.Carrera)
+    Escribir("Total del 2009 > 20 de la carrera: ", CarMas)
+    Escribir("Total del 2009 < 20 de la carrera: ", CarMen)
+
+    SexoMas:= SexoMas + CarMas
+    SexoMen:= SexoMas + CarMen
+ 
+    CarMas:= 0
+    CarMen:= 0
+
+    ResClave.Carrera:= RegA.Clave.Carrera
+
+FinSubaccion
+
+PROCESO
+
+Abrir E/(Arch)
+Leer(Arch, RegP)
+
+CarMas:= 0
+CarMen:= 0
+SexoMas:= 0
+SexoMen:= 0
+TotGMas:= 0
+TotGMen:= 0
+
+ResClave.Carrera:= RegA.Clave.Carrera
+ResClave.Sexo:= RegA.Clave.Sexo
+
+Mientras NFDA(ArchA) Hacer
+
+    Si RegA.Clave.Sexo <> ResClave.Sexo Entonces
+        Corte_Sexo
+    Sino
+        Si RegA.Clave.Carrera <> ResClave.Carrera Entonces
+            Corte_Carrera
+        FinSi 
+    FInSi
+
+    Si RegA.Fecha_Ing = 2009 Entonces
+        Si RegA.Tot_Mat_Apro > 20 Entonces
+            CarMas:= CarMas + 1
+        Sino
+            CarMen:= CarMen + 1
+        FinSi
+    FinSi
+
+    Leer(Arch, mas)
+FinMientras
+
+Corte_Sexo //Corte de mayor nivel
+
+Escribir("Alumnos del 2009 que aprobaron > 20 materias: ", TotGMas)
+Escribir("Alumnos del 2009 que aprobaron < 20 materias: ", TotGMas)
+
+Cerrar(Arch)
+
+FinAccion
+
+
+
+
+
+
+
+
+PRUEBA DE ESCRITORIO
+
+
+
+
+macho       ISI      19      
+macho       ISI      21      
+macho       IEM      21      
+hembra      ISI      19	     
+hembra      IEM      19  
+hembra      IEM      21  
+hembra      IQ       19
+
+
+ResClaveCar  IQ
+ResClaveSex  hembra
+
+
+CarMen = 0
+CarMas = 0
+
+SexoMas = 0
+SexoMen = 0
+
+TotGenMen = 4
+TotGenMas = 3
+
+
+PANTALLA
+
+carrera: ISI
+Total del 2009 > 20 de la carrera: 1
+Total del 2009 < 20 de la carrera: 1
+
+carrera: IEM
+Total del 2009 > 20 de la carrera: 1
+Total del 2009 < 20 de la carrera: 0
+
+sexo: macho
+Total del 2009 > 20 del sexo: 2
+Total del 2009 < 20 del sexo: 1
+
+carrera: ISI
+Total del 2009 > 20 de la carrera: 0
+Total del 2009 < 20 de la carrera: 1
+
+carrera: IEM
+Total del 2009 > 20 de la carrera: 1
+Total del 2009 < 20 de la carrera: 1
+
+carrera: IQ
+Total del 2009 > 20 de la carrera: 0
+Total del 2009 < 20 de la carrera: 1
+
+sexo: hembra
+Total del 2009 > 20 del sexo: 1
+Total del 2009 < 20 del sexo: 3
+
+
+Alumnos del 2009 que aprobaron > 20 materias: 3
+Alumnos del 2009 que aprobaron < 20 materias: 4
+
+
+
+
+
+

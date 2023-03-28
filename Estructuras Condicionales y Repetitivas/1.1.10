@@ -1,0 +1,21 @@
+
+
+Accion divisor Es
+Ambiente
+
+A: entero    24
+B: entero    8
+
+PROCESO
+
+Si (A MOD B) = 0 entonces
+    Imprimir("B sí es divisor de A")
+Sino
+    Si (B MOD A) = 0 entonces
+        Imprimir("A sí es divisor de B")
+    Sino
+        Imprimir("Ninguno es divisor del otro")
+    FinSi
+FinSi
+
+FInAccion

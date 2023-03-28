@@ -1,0 +1,37 @@
+
+
+Acccion Suma(Prim: Puntero a NODO) Es
+Ambiente
+
+
+NODO = Registro
+    valor:
+    prox: puntero a NODO
+FinRegistro
+
+q: puntero a NODO
+
+SumaPar: N
+SumaImpar: N
+
+PROCESO
+
+SumaPar:= 0
+SumaImpar:= 0
+q:= Prim
+
+Mientras q <> Nill hacer
+
+    Si (*q.valor MOD 2) = 0 entonces
+        SumaPar:= SumaPar + *q.valor
+    Sino
+        SumaImpar:= SumaImpar + *q.valor
+    FinSi
+
+    q:= *q.prox
+
+FinMientras
+
+Escribir("La suma de los numeros pares es de: ", SumaPar)
+Escribir("La suma de los numeros impares es de: ", SumaImpar)
+FinAccion.
